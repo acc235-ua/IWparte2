@@ -55,7 +55,7 @@ namespace backEndWeb
         public Boolean esAdminUser
         {
             get { return esAdmin; }
-            set {  esAdmin = value; }
+            set { esAdmin = value; }
 
         }
         public ENUsuario()
@@ -106,5 +106,75 @@ namespace backEndWeb
             this.apellidos = e.apellidos;
             this.contrasena = e.contrasena;
         }
-    }
+    
+
+
+        public bool readUsuario()
+        {
+            CADUsuario aux = new CADUsuario();
+             if(aux.readUsuario(this) == "")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
+
+        public bool createUsuario()
+        {
+            CADUsuario aux = new CADUsuario();
+            ENUsuario usu = new ENUsuario(this);
+            if (usu.readUsuario())
+            {
+                //ya esxiste
+                return false;
+            }
+            else
+            {
+                aux.createUsuario(usu);
+                return true;
+            }
+          
+            
+          
+        }
+
+        public bool updateUsuario()
+        {
+            CADUsuario aux = new CADUsuario();
+            ENUsuario usu = new ENUsuario(this);
+            if (usu.readUsuario())
+            {
+                aux.updateUsuario(usu);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+
+        public bool deleteUsuario()
+        {
+            CADUsuario aux = new CADUsuario();
+            ENUsuario usu = new ENUsuario(this);
+            if (usu.readUsuario())
+            {
+                aux.deleteUsuario(usu);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+}
 }

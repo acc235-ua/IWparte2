@@ -9,8 +9,7 @@ using System.Data.SqlTypes;
 using System.Data.SqlClient;
 using System.ComponentModel.Design;
 using System.Configuration;
-using backEndWeb;
-using backendweb.EN;
+using backendweb;
 
 namespace backEndWeb
 {

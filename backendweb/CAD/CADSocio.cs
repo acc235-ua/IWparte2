@@ -29,10 +29,11 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Socio] (id,Saldo,Estado) + values(@id,@Saldo,@Estado", conec);
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Socio] (id,Saldo,Estado,MembresiaId) + values(@id,@Saldo,@Estado,@MembresiaId", conec);
                 consulta.Parameters.AddWithValue("@id", socio.id);
                 consulta.Parameters.AddWithValue("@Saldo", socio.Saldo);
                 consulta.Parameters.AddWithValue("@Estado", socio.Estado);
+                consulta.Parameters.AddWithValue("@MembresiaId", socio.MembresiaId);
                 consulta.ExecuteNonQuery();
 
             }catch (SqlException ex)
@@ -62,6 +63,7 @@ namespace backEndWeb
                 socio.id = int.Parse(dr["id"].ToString());
                 socio.Saldo = int.Parse(dr["Saldo"].ToString());
                 socio.Estado = dr["Estado"].ToString();
+                socio.MembresiaId = int.Parse(dr["MembresiaId"].ToString());
                 dr.Close();
             }
             catch (SqlException ex)
@@ -82,10 +84,12 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Socio] SET Saldo = @Saldo, Estado = @Estado WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Socio] SET Saldo = @Saldo, Estado = @Estado, MembresiaId = @MembresiaId WHERE id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", socio.id);
                 consulta.Parameters.AddWithValue("@Saldo", socio.Saldo);
                 consulta.Parameters.AddWithValue("@Estado", socio.Estado);
+                consulta.Parameters.AddWithValue("@MembresiaId", socio.MembresiaId);
+
                 consulta.ExecuteNonQuery();
             }
             catch (SqlException ex)
@@ -135,7 +139,8 @@ namespace backEndWeb
                 u.DNI, 
                 u.Correo_electronico, 
                 s.Saldo, 
-                s.Estado
+                s.Estado,
+                s.MembresiaId
             FROM 
                 Usuario u
             INNER JOIN 
@@ -156,7 +161,8 @@ namespace backEndWeb
                             DNI = reader.GetString(3),
                             CorreoElectronico = reader.GetString(4),
                             Saldo = reader.GetInt32(5),
-                            Estado = reader.GetString(6)
+                            Estado = reader.GetString(6),
+                            MembresiaId = reader.GetInt32(7)
                         };
 
                         socios.Add(socio);

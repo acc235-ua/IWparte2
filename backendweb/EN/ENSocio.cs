@@ -13,6 +13,7 @@ namespace backEndWeb
         public int id;
         public int Saldo;
         public string Estado;
+        public int MembresiaId;
 
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
@@ -36,6 +37,12 @@ namespace backEndWeb
         {
             get { return Estado; }
             set { Estado = value; }
+        }
+
+        public int MembresiaIdSocio
+        {
+            get { return MembresiaId; }
+            set { MembresiaId = value; }
         }
 
         public ENSocio()

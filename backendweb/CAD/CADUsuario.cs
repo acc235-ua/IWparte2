@@ -68,8 +68,8 @@ namespace backEndWeb
             {
                 conec.Open();
                 SqlCommand consulta = new SqlCommand("Insert INTO [dbo].[Usuario] " +
-                    "(id,Apellidos,DNI,Es_admin,Correo_electronico,Contrasena)" +
-                    "values (@id,@apellidos,@dni,@esAdmin,@correo,@contrasena)", conec);
+                    "(id,Apellidos,DNI,Es_admin,Correo_electronico,Contrasena,nombre)" +
+                    "values (@id,@apellidos,@dni,@esAdmin,@correo,@contrasena,@nombre)", conec);
 
                 consulta.Parameters.Add("@id", SqlDbType.Int).Value = user.idUser;
                 consulta.Parameters.Add("@apellidos", SqlDbType.Text).Value = user.apellidosUser;
@@ -114,6 +114,7 @@ namespace backEndWeb
                     user.esAdminUser = Convert.ToBoolean(tablaDatos.Tables[0].Rows[0]["Es_admin"]);
                     user.correoUser = tablaDatos.Tables[0].Rows[0]["Correo_electronico"].ToString();
                     user.contrasenaUser = tablaDatos.Tables[0].Rows[0]["Contrasena"].ToString();
+                    user.nombreUser = tablaDatos.Tables[0].Rows[0]["nombre"].ToString();
 
                 }
                 else
@@ -168,7 +169,7 @@ namespace backEndWeb
 
                 SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Usuario] SET, " +
                     "Apellidos=@apellidosuser, DNI= @dniuser, Es_admin=@esadminuser, " +
-                    "Correo_electronico= @correouser, Contrasena= @contrasenaUser" +
+                    "Correo_electronico= @correouser, Contrasena= @contrasenaUser, nombre= @nombre" +
                     "WHERE id= @iduser", conec);
 
                 consulta.Parameters.Add("@iduser", SqlDbType.Int).Value = user.idUser;
@@ -178,6 +179,8 @@ namespace backEndWeb
                 consulta.Parameters.Add("@esadminuser", SqlDbType.Bit).Value = user.esAdminUser;
                 consulta.Parameters.Add("@correouser", SqlDbType.Text).Value = user.correoUser;
                 consulta.Parameters.Add("@contrasenauser", SqlDbType.Text).Value = user.contrasenaUser;
+                consulta.Parameters.Add("@nombre", SqlDbType.VarChar).Value = user.nombreUser;
+
 
                 consulta.ExecuteNonQuery();
 
@@ -194,5 +197,43 @@ namespace backEndWeb
 
         }
 
+        public bool listarUsuarios(ref (int , string )[] usuarios )
+        {
+            //se itera sobre usuarios esperando un array vacío. Si queréis se puede cambiar
+            bool respuesta = false;
+
+            SqlConnection conec = new SqlConnection(constring);
+            try
+            {
+                conec.Open();
+
+                SqlDataAdapter consulta = new SqlDataAdapter("SELECT id,nombre FROM [dbo].[Usuario]", conec);
+                SqlDataReader leerDatos = consulta.SelectCommand.ExecuteReader();
+
+                List<(int, string)> listaTemporal = new List<(int, string)>();
+
+                while (leerDatos.Read())
+                {
+                    int id = int.Parse(leerDatos["id"].ToString());
+                    string nombre = leerDatos["nombre"].ToString();
+                    listaTemporal.Add((id, nombre));
+                }
+
+                
+                usuarios = listaTemporal.ToArray();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error en CAD listando usuarios: ", ex.Message);
+            }
+            finally
+            {
+                conec.Close();
+
+            }
+            return respuesta;
+
+        }
     }
 }

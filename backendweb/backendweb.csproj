@@ -42,8 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CAD\CADActividad.cs" />
+    <Compile Include="CAD\CADActividad_Impartida.cs" />
+    <Compile Include="CAD\CADReserva.cs" />
     <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="EN\ENActividad.cs" />
+    <Compile Include="EN\ENActividad_Impartida.cs" />
+    <Compile Include="EN\ENReserva.cs" />
     <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

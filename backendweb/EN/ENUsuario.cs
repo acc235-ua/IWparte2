@@ -135,7 +135,7 @@ namespace backEndWeb
             }
             else
             {
-                aux.createUsuario(usu);
+                aux.createUsuario(this);
                 return true;
             }
           
@@ -146,10 +146,10 @@ namespace backEndWeb
         public bool updateUsuario()
         {
             CADUsuario aux = new CADUsuario();
-            ENUsuario usu = new ENUsuario(this);
-            if (usu.readUsuario())
+          
+            if (this.readUsuario())
             {
-                aux.updateUsuario(usu);
+                aux.updateUsuario(this);
                 return true;
             }
             else
@@ -163,10 +163,10 @@ namespace backEndWeb
         public bool deleteUsuario()
         {
             CADUsuario aux = new CADUsuario();
-            ENUsuario usu = new ENUsuario(this);
-            if (usu.readUsuario())
+            //ENUsuario usu = new ENUsuario(this);
+            if (this.readUsuario())
             {
-                aux.deleteUsuario(usu);
+                aux.deleteUsuario(this);
                 return true;
             }
             else
@@ -176,5 +176,19 @@ namespace backEndWeb
         }
 
 
-}
+        public bool listarUsuarios(ref (int, string)[] usuarios) // ESPERAMOS UN ARRAY VACÍO PARA LLENAR CON TUPLAS 
+                                                                   //EN EL CAD SE BORRA CONTENIDO ACTUAL ARRAY
+        {
+            CADUsuario aux = new CADUsuario();
+            if (aux.listarUsuarios(ref usuarios))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
 }

@@ -10,34 +10,33 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="StyleSheet.css" rel="stylesheet" />
 </head>
-<body>
-    <!-- Contenedor principal que ocupa todo el ancho -->
-    <div class="w-full">
-        <header class="bg-blue-500 text-white p-4">
-            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-                <h1 class="text-2xl md:text-3xl font-bold mb-2 md:mb-0">Fit Gym</h1>
-                <nav>
-                    <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
-                        <li><a href="#" class="hover:text-gray-300">Inicio</a></li>
-                        <li><a href="#" class="hover:text-gray-300">Tarifas</a></li>
-                        <li><a href="#" class="hover:text-gray-300">Actividades</a></li>
-                        <li><a href="#" class="hover:text-gray-300">Instalaciones</a></li>
-                        <li><a href="#" class="hover:text-gray-300">Contacto</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-
-        <!-- Aquí va el contenido principal, ahora con `w-full` -->
-        <div class="w-full">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+<body class="min-h-screen flex flex-col">
+    <!-- Contenedor principal -->
+    <header class="bg-blue-500 text-white p-4">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-2xl md:text-3xl font-bold mb-2 md:mb-0">Fit Gym</h1>
+            <nav>
+                <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+                    <li><a href="Inicio.aspx" class="hover:text-gray-300">Inicio</a></li>
+                    <li><a href="Tarifas.aspx" class="hover:text-gray-300">Tarifas</a></li>
+                    <li><a href="#" class="hover:text-gray-300">Actividades</a></li>
+                    <li><a href="#" class="hover:text-gray-300">Instalaciones</a></li>
+                    <li><a href="#" class="hover:text-gray-300">Contacto</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <!-- Footer -->
-        <footer class="bg-blue-500 text-white text-center py-4">
-            <p>&copy; 2024 Fit Gym. Todos los derechos reservados.</p>
-        </footer>
+    <!-- Contenedor flexible para el contenido principal -->
+    <div class="flex-1 w-full">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-blue-500 text-white text-center py-4">
+        <p>&copy; 2024 Fit Gym. Todos los derechos reservados.</p>
+    </footer>
 </body>
+
     <script src="JavaScript.js"></script>
 </html>

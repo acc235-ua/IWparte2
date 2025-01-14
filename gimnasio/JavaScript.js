@@ -15,3 +15,17 @@ function changeSlide(direction) {
 
 // Inicializar carrusel
 showSlide(currentSlide);
+
+function togglePricing(plan) {
+    const prices = {
+        monthly: { student: '€19,99', standard: '€24,99', senior: '€21,99' },
+        annual: { student: '€199,99', standard: '€249,99', senior: '€219,99' }
+    };
+
+    document.getElementById('price-student').innerText = prices[plan].student;
+    document.getElementById('price-standard').innerText = prices[plan].standard;
+    document.getElementById('price-senior').innerText = prices[plan].senior;
+
+    document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`.toggle-btn[onclick*="${plan}"]`).classList.add('active');
+}

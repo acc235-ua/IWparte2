@@ -37,7 +37,4 @@
             <p class="text-base md:text-lg"><strong>Domingos y festivos:</strong> 8:30 - 14:30</p>
         </div>
     </section>
-
-    <!-- JavaScript para el carrusel -->
-    <script src="JavaScript.js"></script>
 </asp:Content>

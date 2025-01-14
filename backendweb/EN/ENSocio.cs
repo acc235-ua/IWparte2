@@ -153,5 +153,31 @@ namespace backEndWeb
                 return false;
             }
         }
+
+        public bool cambiarEstadoSocio(string estado)
+        {
+            CADSocio aux = new CADSocio();
+            if (aux.readSocio(this))
+            {
+                return aux.cambiarEstadoSocio(this, estado);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool cambiarMembresiaSocio(int idMembresia)
+        {
+            CADSocio aux = new CADSocio();
+            if (aux.readSocio(this))
+            {
+                return aux.cambiarMembresiaSocio(this, idMembresia);
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

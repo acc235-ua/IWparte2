@@ -227,7 +227,7 @@ namespace backEndWeb
             return respuesta;
         }
 
-        public bool CambiarEstadoSocio(ENSocio socio, string estado)
+        public bool cambiarEstadoSocio(ENSocio socio, string estado)
         {
             bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
@@ -237,6 +237,30 @@ namespace backEndWeb
                 SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Socio] SET Estado = @estado WHERE id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", socio.id);
                 consulta.Parameters.AddWithValue("@estado", estado);
+                consulta.ExecuteNonQuery();
+                respuesta = true;
+            }
+            catch (SqlException ex)
+            {
+                respuesta = false;
+            }
+            finally
+            {
+                conec.Close();
+            }
+            return respuesta;
+        }
+
+        public bool cambiarMembresiaSocio(ENSocio socio, int membresiaId)
+        {
+            bool respuesta = false;
+            SqlConnection conec = new SqlConnection(constring);
+            conec.Open();
+            try
+            {
+                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Socio] SET MembresiaId = @membresiaId WHERE id = @id", conec);
+                consulta.Parameters.AddWithValue("@id", socio.id);
+                consulta.Parameters.AddWithValue("@membresiaId", membresiaId);
                 consulta.ExecuteNonQuery();
                 respuesta = true;
             }

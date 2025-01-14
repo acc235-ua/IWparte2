@@ -42,8 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CAD\CADCategoria.cs" />
+    <Compile Include="CAD\CADMembresia.cs" />
+    <Compile Include="CAD\CADMonitor.cs" />
+    <Compile Include="CAD\CADSocio.cs" />
     <Compile Include="CAD\CADUsuario.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="EN\ENCategoria.cs" />
+    <Compile Include="EN\ENMembresia.cs" />
+    <Compile Include="EN\ENMonitor.cs" />
+    <Compile Include="EN\ENSocio.cs" />
     <Compile Include="EN\ENUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

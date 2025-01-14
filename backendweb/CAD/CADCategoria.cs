@@ -21,9 +21,9 @@ namespace backEndWeb
             constring = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ToString();
         }
 
-        public string createCategoria(ENCategoria categoria)
+        public bool createCategoria(ENCategoria categoria)
         {
-            string respuesta = "";
+            bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -32,10 +32,11 @@ namespace backEndWeb
                 consulta.Parameters.AddWithValue("@id", categoria.id);
                 consulta.Parameters.AddWithValue("@Nombre", categoria.Nombre);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -44,9 +45,9 @@ namespace backEndWeb
             return respuesta;
         }
 
-        public string deleteCategoria(ENCategoria categoria)
+        public bool deleteCategoria(ENCategoria categoria)
         {
-            string respuesta = "";
+            bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -54,10 +55,11 @@ namespace backEndWeb
                 SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Categoria] WHERE id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", categoria.id);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -66,9 +68,9 @@ namespace backEndWeb
             return respuesta;
         }
 
-        public string updateCategoria(ENCategoria categoria)
+        public bool updateCategoria(ENCategoria categoria)
         {
-            string respuesta = "";
+            bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -77,10 +79,11 @@ namespace backEndWeb
                 consulta.Parameters.AddWithValue("@id", categoria.id);
                 consulta.Parameters.AddWithValue("@Nombre", categoria.Nombre);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -88,6 +91,34 @@ namespace backEndWeb
             }
             return respuesta;
         }
+
+        public bool readCategoria(ENCategoria categoria)
+        {
+            bool respuesta = false;
+            SqlConnection conec = new SqlConnection(constring);
+            conec.Open();
+            try
+            {
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Categoria] WHERE id = @id", conec);
+                consulta.Parameters.AddWithValue("@id", categoria.id);
+                SqlDataReader reader = consulta.ExecuteReader();
+                if (reader.Read())
+                {
+                    categoria.id = reader.GetInt32(0);
+                    categoria.Nombre = reader.GetString(1);
+                    respuesta = true;
+                }
+            }
+            catch (SqlException ex)
+            {
+                respuesta = false;
+            }
+            finally
+            {
+                conec.Close();
+            }
+            return respuesta;
+        }   
 
 
 

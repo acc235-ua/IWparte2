@@ -62,6 +62,50 @@ namespace backEndWeb
             this.Precio = enMembresia.Precio;
         }
 
+        public bool createMembresia()
+        {
+            CADMembresia aux = new CADMembresia();
+            if(aux.readMembresia(this))
+            {
+                return false;
+            }
+            else
+            {
+                return aux.createMembresia(this);
+            }
+
+        }
+
+        public bool deleteMembresia()
+        {
+            CADMembresia aux = new CADMembresia();
+            if (aux.readMembresia(this))
+            {
+                return aux.deleteMembresia(this);
+
+            }
+            else
+            {
+                return false; 
+            }
+
+
+
+        }
+
+        public bool getMembresia()
+        {
+            CADMembresia aux = new CADMembresia();
+           
+            if (aux.readMembresia(this))
+            {
+                return aux.getMembresia(this);
+            }
+            else
+            {
+                return false;            }
+        }
+
 
 
 

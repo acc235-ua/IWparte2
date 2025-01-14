@@ -67,8 +67,51 @@ namespace backEndWeb
             this.telefono = monitor.telefono;
         }
 
+        public bool createMonitor()
+        {
+            CADMonitor aux = new CADMonitor();
+            if (aux.readMonitor(this))
+            {
+                return aux.createMonitor(this);
+            }
+            else
+            {
+                return false;
+            }
+        }
 
+        public bool deleteMonitor()
+        {
+            CADMonitor aux = new CADMonitor();
+            if (aux.readMonitor(this))
+            {
+                return aux.deleteMonitor(this);
+            }
+            else
+            {
+                return false;
+            }
 
+        }
+
+        public bool updateMonitor()
+        {
+            CADMonitor aux = new CADMonitor();
+            if (aux.readMonitor(this))
+            {
+                return aux.updateMonitor(this);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<ENMonitor> getAllMonitores()
+        {
+            CADMonitor aux = new CADMonitor();
+            return aux.getAllMonitores();
+        }
 
     }
 }

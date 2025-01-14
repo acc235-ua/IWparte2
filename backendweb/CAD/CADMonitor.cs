@@ -23,9 +23,9 @@ namespace backEndWeb
 
         }
 
-        public string createMonitor(ENMonitor monitor)
+        public bool createMonitor(ENMonitor monitor)
         {
-            string respuesta = "";
+            bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -36,10 +36,11 @@ namespace backEndWeb
                 consulta.Parameters.AddWithValue("@salario", monitor.salario);
                 consulta.Parameters.AddWithValue("@telefono", monitor.telefono);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -50,9 +51,9 @@ namespace backEndWeb
 
         }
 
-        public string deleteMonitor(ENMonitor monitor)
+        public bool deleteMonitor(ENMonitor monitor)
         {
-            string respuesta = "";
+            bool respuesta = false; ;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -60,10 +61,11 @@ namespace backEndWeb
                 SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Monitor] WHERE id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", monitor.id);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -72,9 +74,9 @@ namespace backEndWeb
             return respuesta;
         }
 
-        public string updateMonitor(ENMonitor monitor)
+        public bool updateMonitor(ENMonitor monitor)
         {
-            string respuesta = "";
+            bool respuesta =false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -87,10 +89,11 @@ namespace backEndWeb
                 consulta.Parameters.AddWithValue("@salario", monitor.salario);
                 consulta.Parameters.AddWithValue("@telefono", monitor.telefono);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -146,6 +149,36 @@ namespace backEndWeb
                 conec.Close();
             }
             return monitores;
+        }
+
+        public bool readMonitor(ENMonitor monitor)
+        {
+            bool respuesta = false;
+            SqlConnection conec = new SqlConnection(constring);
+            conec.Open();
+            try
+            {
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Monitor] WHERE id = @id", conec);
+                consulta.Parameters.AddWithValue("@id", monitor.id);
+                SqlDataReader reader = consulta.ExecuteReader();
+                if (reader.Read())
+                {
+                    monitor.id = reader.GetInt32(0);
+                    monitor.especialidad = reader.GetString(1);
+                    monitor.salario = reader.GetFloat(2);
+                    monitor.telefono = reader.GetString(3);
+                    respuesta = true;
+                }
+            }
+            catch (SqlException ex)
+            {
+                respuesta = false;
+            }
+            finally
+            {
+                conec.Close();
+            }
+            return respuesta;
         }
     }
 }

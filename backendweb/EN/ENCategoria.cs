@@ -41,6 +41,48 @@ namespace backEndWeb
             this.Nombre = enCategoria.Nombre;
         }
 
+        public bool createCategoria()
+        {
+            CADCategoria aux = new CADCategoria();
+            if (aux.readCategoria(this))
+            {
+                return false;
+            }
+            else
+            {
+                return aux.createCategoria(this);
+            }
+        }
 
+        public bool deleteCategoria()
+        {
+            CADCategoria aux = new CADCategoria();
+            if (aux.readCategoria(this))
+            {
+                return aux.deleteCategoria(this);
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public bool updateCategoria()
+        {
+            CADCategoria aux = new CADCategoria();
+            if (aux.readCategoria(this))
+            {
+                return aux.updateCategoria(this);
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+
+        }
     }
 }

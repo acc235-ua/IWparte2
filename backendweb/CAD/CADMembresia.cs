@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.ComponentModel.Design;
 using System.Configuration;
 using backEndWeb;
+using System.Security.Policy;
 
 namespace backEndWeb
 {
@@ -21,9 +22,9 @@ namespace backEndWeb
             constring = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ToString();
         }
 
-        public string createMembresia(ENMembresia membresia)
+        public bool createMembresia(ENMembresia membresia)
         {
-            string respuesta = "";
+            bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -34,10 +35,11 @@ namespace backEndWeb
                 consulta.Parameters.AddWithValue("@Tipo", membresia.Tipo);
                 consulta.Parameters.AddWithValue("@Precio", membresia.Precio);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -46,9 +48,9 @@ namespace backEndWeb
             return respuesta;
         }
 
-        public string deleteMembresia(ENMembresia membresia)
+        public bool deleteMembresia(ENMembresia membresia)
         {
-            string respuesta = "";
+            bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -56,10 +58,11 @@ namespace backEndWeb
                 SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Membresia] WHERE id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", membresia.id);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -68,9 +71,9 @@ namespace backEndWeb
             return respuesta;
         }
 
-        public string getMembresia(ENMembresia membresia)
+        public bool getMembresia(ENMembresia membresia)
         {
-            string respuesta = "";
+            bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -84,10 +87,11 @@ namespace backEndWeb
                 membresia.Tipo = dr["Tipo"].ToString();
                 membresia.Precio = float.Parse(dr["Precio"].ToString());
                 dr.Close();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -96,9 +100,9 @@ namespace backEndWeb
             return respuesta;
         }
 
-        public string updateMembresia(ENMembresia membresia)
+        public bool updateMembresia(ENMembresia membresia)
         {
-            string respuesta = "";
+            bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
             conec.Open();
             try
@@ -109,10 +113,11 @@ namespace backEndWeb
                 consulta.Parameters.AddWithValue("@Tipo", membresia.Tipo);
                 consulta.Parameters.AddWithValue("@Precio", membresia.Precio);
                 consulta.ExecuteNonQuery();
+                respuesta = true;
             }
             catch (SqlException ex)
             {
-                respuesta = "Error: " + ex.Message;
+                respuesta = false;
             }
             finally
             {
@@ -120,6 +125,35 @@ namespace backEndWeb
             }
             return respuesta;
         }
+
+        public bool readMembresia(ENMembresia membresia)
+        {
+            bool respuesta = false;
+
+            SqlConnection conec = new SqlConnection(constring);
+            try
+            {
+                conec.Open();
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Membresia] WHERE id = @id", conec);
+                consulta.Parameters.AddWithValue("id", membresia.id);
+                SqlDataReader reader = consulta.ExecuteReader();
+                reader.Read();
+                membresia.id = int.Parse(reader["id"].ToString());
+                membresia.Descripcion = reader["Descripcion"].ToString();
+                membresia.Tipo = reader["Tipo"].ToString();
+                membresia.Precio = float.Parse(reader["Precio"].ToString());
+                respuesta = true;
+            }
+            catch (SqlException ex)
+            {
+                respuesta = false;
+                Console.WriteLine("Error", ex.Message);
+            }
+
+            return respuesta;
+        }
+
+
 
 
     }

@@ -4,20 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using backendweb.EN;
 using System.Data.Common;
 using System.Data.SqlTypes;
 using System.Data.SqlClient;
 using System.ComponentModel.Design;
 using System.Configuration;
 
+
+
 namespace backEndWeb
 {
     public class CADUsuario
 
     {
-        private string constring;
+        private string constring { get; set; }
         public CADUsuario()
         {
+            //AppDomain.CurrentDomain.SetData("DataDirectory", AppDomain.CurrentDomain.BaseDirectory);
+
             constring = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ToString();
 
         }
@@ -167,14 +172,14 @@ namespace backEndWeb
             {
                 conec.Open();
 
-                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Usuario] SET, " +
+                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Usuario] SET " +
                     "Apellidos=@apellidosuser, DNI= @dniuser, Es_admin=@esadminuser, " +
                     "Correo_electronico= @correouser, Contrasena= @contrasenaUser, nombre= @nombre" +
                     "WHERE id= @iduser", conec);
 
                 consulta.Parameters.Add("@iduser", SqlDbType.Int).Value = user.idUser;
                 consulta.Parameters.Add("@apellidosuser", SqlDbType.Text).Value = user.apellidosUser;
-                consulta.Parameters.Add("@nombreuser", SqlDbType.Text).Value = user.nombreUser;
+                //consulta.Parameters.Add("@nombreuser", SqlDbType.Text).Value = user.nombreUser;
                 consulta.Parameters.Add("@dniuser", SqlDbType.Text).Value = user.dniUser;
                 consulta.Parameters.Add("@esadminuser", SqlDbType.Bit).Value = user.esAdminUser;
                 consulta.Parameters.Add("@correouser", SqlDbType.Text).Value = user.correoUser;
@@ -221,10 +226,12 @@ namespace backEndWeb
 
                 
                 usuarios = listaTemporal.ToArray();
+                respuesta =true;
 
             }
             catch (Exception ex)
             {
+                respuesta = false;
                 Console.WriteLine("Error en CAD listando usuarios: ", ex.Message);
             }
             finally

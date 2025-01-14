@@ -5,6 +5,8 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+
 
 namespace backEndWeb
 {
@@ -73,19 +75,11 @@ namespace backEndWeb
 
         }
 
-        public ENUsuario(int id, string nombre, string apellidos, string dni, bool esAdmin, string correo, string contrasena)
+        public ENUsuario(string nombre, string apellidos, string dni, bool esAdmin, string correo, string contrasena)
         {
             CADUsuario aux = new CADUsuario();
 
             this.id = aux.obtenerId();
-
-
-
-
-
-
-
-
 
             this.nombre = nombre;
             this.apellidos = apellidos;
@@ -106,13 +100,13 @@ namespace backEndWeb
             this.apellidos = e.apellidos;
             this.contrasena = e.contrasena;
         }
-    
+
 
 
         public bool readUsuario()
         {
             CADUsuario aux = new CADUsuario();
-             if(aux.readUsuario(this) == "")
+            if (aux.readUsuario(this) == "")
             {
                 return true;
             }
@@ -138,15 +132,15 @@ namespace backEndWeb
                 aux.createUsuario(this);
                 return true;
             }
-          
-            
-          
+
+
+
         }
 
         public bool updateUsuario()
         {
             CADUsuario aux = new CADUsuario();
-          
+
             if (this.readUsuario())
             {
                 aux.updateUsuario(this);
@@ -177,7 +171,7 @@ namespace backEndWeb
 
 
         public bool listarUsuarios(ref (int, string)[] usuarios) // ESPERAMOS UN ARRAY VACÍO PARA LLENAR CON TUPLAS 
-                                                                   //EN EL CAD SE BORRA CONTENIDO ACTUAL ARRAY
+                                                                 //EN EL CAD SE BORRA CONTENIDO ACTUAL ARRAY
         {
             CADUsuario aux = new CADUsuario();
             if (aux.listarUsuarios(ref usuarios))
@@ -191,4 +185,5 @@ namespace backEndWeb
 
 
         }
+    }
 }

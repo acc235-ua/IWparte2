@@ -12,7 +12,7 @@ namespace backEndWeb
 {
     public class ENUsuario
     {
-        private int id;
+
         private string nombre;
         private string apellidos;
         private string dni;
@@ -20,11 +20,7 @@ namespace backEndWeb
         private string correo;
         private string contrasena;
 
-        public int idUser
-        {
-            get { return id; }
-            set { id = value; }
-        }
+    
         public string nombreUser
         {
             get { return nombre; }
@@ -63,7 +59,7 @@ namespace backEndWeb
         public ENUsuario()
         {
             CADUsuario aux = new CADUsuario();
-            this.id = aux.obtenerId();
+           
             this.dni = "";
             this.nombre = "";
             this.apellidos = "";
@@ -79,8 +75,6 @@ namespace backEndWeb
         {
             CADUsuario aux = new CADUsuario();
 
-            this.id = aux.obtenerId();
-
             this.nombre = nombre;
             this.apellidos = apellidos;
             this.dni = dni;
@@ -92,7 +86,6 @@ namespace backEndWeb
 
         public ENUsuario(ENUsuario e)
         {
-            this.id = e.id;
             this.nombre = e.nombre;
             this.dni = e.dni;
             this.esAdmin = e.esAdmin;
@@ -170,7 +163,7 @@ namespace backEndWeb
         }
 
 
-        public bool listarUsuarios(ref (int, string)[] usuarios) // ESPERAMOS UN ARRAY VACÍO PARA LLENAR CON TUPLAS 
+        public bool listarUsuarios(ref (string, string)[] usuarios) // ESPERAMOS UN ARRAY VACÍO PARA LLENAR CON TUPLAS 
                                                                  //EN EL CAD SE BORRA CONTENIDO ACTUAL ARRAY
         {
             CADUsuario aux = new CADUsuario();

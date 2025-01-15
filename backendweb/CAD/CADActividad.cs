@@ -32,13 +32,13 @@ namespace backendweb.CAD
             {
                 conec.Open();
 
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Actividad] (id, Nombre, Descripcion, precio, id_categoria) VALUES (@id, @nombre, @descripcion, @precio, @id_categoria)", conec);
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Actividad] (Id, Nombre, Descripcion, Precio, Id_Categoria) VALUES (@id, @nombre, @descripcion, @precio, @id_categoria)", conec);
 
                 //consulta.Parameters.AddWithValue("@id", actividad.idActividad);
                 consulta.Parameters.Add("@id", SqlDbType.Int).Value = actividad.idActividad;
                 consulta.Parameters.Add("@nombre", SqlDbType.VarChar).Value = actividad.nombreActividad;
                 consulta.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = actividad.descripcionActividad;
-                consulta.Parameters.Add("@precio", SqlDbType.Int).Value = actividad.precioActividad;
+                consulta.Parameters.Add("@precio", SqlDbType.Float).Value = actividad.precioActividad;
                 consulta.Parameters.Add("@id_categoria", SqlDbType.Int).Value = actividad.idCategoriaActividad;
 
                 consulta.ExecuteNonQuery();
@@ -64,7 +64,7 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Actividad] WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Actividad] WHERE Id = @id", conec);
                 consulta.Parameters.Add("@id", SqlDbType.Int).Value = actividad.idActividad;
 
                 consulta.ExecuteNonQuery();
@@ -90,11 +90,11 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Actividad] SET Nombre = @nombre, Descripcion = @descripcion, precio = @precio, id_categoria = @id_categoria WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Actividad] SET Nombre = @nombre, Descripcion = @descripcion, Precio = @precio, Id_Categoria = @id_categoria WHERE Id = @id", conec);
                 consulta.Parameters.Add("@id", SqlDbType.Int).Value = actividad.idActividad;
                 consulta.Parameters.Add("@nombre", SqlDbType.VarChar).Value = actividad.nombreActividad;
                 consulta.Parameters.Add("@descripcion", SqlDbType.VarChar).Value = actividad.descripcionActividad;
-                consulta.Parameters.Add("@precio", SqlDbType.Int).Value = actividad.precioActividad;
+                consulta.Parameters.Add("@precio", SqlDbType.Float).Value = actividad.precioActividad;
                 consulta.Parameters.Add("@id_categoria", SqlDbType.Int).Value = actividad.idCategoriaActividad;
                 consulta.ExecuteNonQuery();
                 actualizado = true;
@@ -118,17 +118,17 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Actividad] WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Actividad] WHERE Id = @id", conec);
                 consulta.Parameters.Add("@id", SqlDbType.Int).Value = actividad.idActividad;
                 SqlDataReader reader = consulta.ExecuteReader();
                 if (reader.Read())
                 {
                     
-                    actividad.idActividad = int.Parse(reader["id"].ToString());
+                    actividad.idActividad = int.Parse(reader["Id"].ToString());
                     actividad.nombreActividad = reader["Nombre"].ToString();
                     actividad.descripcionActividad = reader["Descripcion"].ToString();
-                    actividad.precioActividad = int.Parse(reader["precio"].ToString());
-                    actividad.idCategoriaActividad = int.Parse(reader["id_categoria"].ToString());
+                    actividad.precioActividad = float.Parse(reader["Precio"].ToString());
+                    actividad.idCategoriaActividad = int.Parse(reader["Id_Categoria"].ToString());
                     leido = true;
                 }
             }

@@ -30,21 +30,22 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Reserva] WHERE id_socio = @id_socio AND id_actividad = @id_actividad AND id_monitor= @id_monitor AND fecha_actividad = @fecha_actividad", conec);
-                consulta.Parameters.Add("@id_socio", SqlDbType.Int).Value = reserva.idSocio;
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dsbo].[Reserva] WHERE Correo_Socio = @correo_socio AND Id_Actividad = @id_actividad AND Id_Monitor= @id_monitor AND Fecha_Actividad = @fecha_Actividad ", conec);
+                consulta.Parameters.Add("@correo_socio", SqlDbType.VarChar).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = reserva.idActividad;
-                consulta.Parameters.Add("@id_monitor", SqlDbType.Int).Value = reserva.idMonitor;
+                consulta.Parameters.Add("@correo_monitor", SqlDbType.VarChar).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@fecha_actividad", SqlDbType.DateTime).Value = reserva.fechaActividad;
+
 
                 SqlDataReader reader = consulta.ExecuteReader();
                 if (reader.Read())
                 {
-                    reserva.idSocio = int.Parse(reader["id_socio"].ToString());
-                    reserva.idActividad = int.Parse(reader["id_actividad"].ToString());
-                    reserva.idMonitor = int.Parse(reader["id_monitor"].ToString());
-                    reserva.fechaActividad = DateTime.Parse(reader["fecha_actividad"].ToString());
-                    reserva.fechaAltaReserva = DateTime.Parse(reader["fecha_alta"].ToString());
-                    reserva.activaReserva = bool.Parse(reader["activa"].ToString());
+                    reserva.CorreoMonitorActividad = reader["Correo_Actividad"].ToString();
+                    reserva.idActividad = int.Parse(reader["Id_Actividad"].ToString());
+                    reserva.CorreoSocioActividad = reader["Correo_Monitor"].ToString();
+                    reserva.fechaActividad = DateTime.Parse(reader["Fecha_Actividad"].ToString());
+                    reserva.fechaAltaReserva = DateTime.Parse(reader["Fecha_Alta"].ToString());
+                    reserva.activaReserva = bool.Parse(reader["Activa"].ToString());
                     leido = true;
 
                 }
@@ -68,10 +69,10 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Reserva] (id_socio, id_actividad, id_monitor, fecha_actividad, fecha_alta, activa) VALUES (@id_socio, @id_actividad, @id_monitor, @fecha_actividad, @fecha_alta, @activa)", conec);
-                consulta.Parameters.Add("@id_socio", SqlDbType.Int).Value = reserva.idSocio;
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Reserva] (Correo_Socio, Id_Actividad,Correo_Monitor, Fecha_Actividad, Fecha_Alta, Activa) VALUES (@correo_socio, @id_actividad, @correo_monitor, @fecha_actividad, @fecha_alta, @activa)", conec);
+                consulta.Parameters.Add("@correo_socio", SqlDbType.VarChar).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = reserva.idActividad;
-                consulta.Parameters.Add("@id_monitor", SqlDbType.Int).Value = reserva.idMonitor;
+                consulta.Parameters.Add("@correo_monitor", SqlDbType.Int).Value = reserva.CorreoMonitorActividad;
                 consulta.Parameters.Add("@fecha_actividad", SqlDbType.DateTime).Value = reserva.fechaActividad;
                 consulta.Parameters.Add("@fecha_alta", SqlDbType.DateTime).Value = reserva.fechaAltaReserva;
                 consulta.Parameters.Add("@activa", SqlDbType.Bit).Value = reserva.activaReserva;
@@ -98,10 +99,10 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Reserva] SET activa = @activa, fecha_alta = @fecha_alta WHERE id_socio = @id_socio AND id_actividad = @id_actividad AND id_monitor = @id_monitor AND fecha_actividad = @fecha_actividad", conec);
-                consulta.Parameters.Add("@id_socio", SqlDbType.Int).Value = reserva.idSocio;
+                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Reserva] SET Activa = @activa, Fecha_Alta = @fecha_alta WHERE Correo_Socio = @correo_socio AND Id_Actividad = @id_actividad AND Correo_Monitor = @correo_monitor AND Fecha_Actividad = @fecha_actividad", conec);
+                consulta.Parameters.Add("@correo_monitor", SqlDbType.Int).Value = reserva.CorreoMonitorActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = reserva.idActividad;
-                consulta.Parameters.Add("@id_monitor", SqlDbType.Int).Value = reserva.idMonitor;
+                consulta.Parameters.Add("@correo_socio", SqlDbType.Int).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@fecha_actividad", SqlDbType.DateTime).Value = reserva.fechaActividad;
                 consulta.Parameters.Add("@fecha_alta", SqlDbType.DateTime).Value = reserva.fechaAltaReserva;
                 consulta.Parameters.Add("@activa", SqlDbType.Bit).Value = reserva.activaReserva;
@@ -128,10 +129,10 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Reserva] WHERE id_socio = @id_socio AND id_actividad = @id_actividad AND id_monitor = @id_monitor AND fecha_actividad = @fecha_actividad", conec);
-                consulta.Parameters.Add("@id_socio", SqlDbType.Int).Value = reserva.idSocio;
+                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Reserva] WHERE Correo_socio = @correo_socio AND Id_Actividad = @id_actividad AND Correo_Monitor = @correo_monitor AND Fecha_Actividad = @fecha_actividad", conec);
+                consulta.Parameters.Add("@correo_socio", SqlDbType.Int).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = reserva.idActividad;
-                consulta.Parameters.Add("@id_monitor", SqlDbType.Int).Value = reserva.idMonitor;
+                consulta.Parameters.Add("@correo_monitor", SqlDbType.Int).Value = reserva.CorreoMonitorActividad;
                 consulta.Parameters.Add("@fecha_actividad", SqlDbType.DateTime).Value = reserva.fechaActividad;
                 consulta.ExecuteNonQuery();
                 borrado = true;

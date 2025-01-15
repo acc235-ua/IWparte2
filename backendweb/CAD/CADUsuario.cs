@@ -31,37 +31,6 @@ namespace backEndWeb
         /// suma 1 al ultimo id introducido a la bbdd, si esta vacio devuelve 1
         /// </summary>
         /// <returns></returns>
-        public int obtenerId()
-        {
-            int idNuevo = 1;
-            SqlConnection conec = new SqlConnection(constring);
-            try
-            {
-                conec.Open();
-                SqlCommand consulta = new SqlCommand("Select max(Id) maxId, Count(Id) numRows from [dbo].[comentario]", conec);
-
-                SqlDataReader dr = consulta.ExecuteReader();
-
-                dr.Read();
-
-                if (int.Parse(dr["numRows"].ToString()) != 0)
-                {
-                    idNuevo = int.Parse(dr["maxId"].ToString()) + 1;
-                    dr.Close();
-                }
-
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine("The operation has failed.Error: {0}", ex.Message);
-            }
-            finally
-            {
-                conec.Close();
-            }
-
-            return idNuevo;
-        }
 
 
         public string createUsuario(ENUsuario user)
@@ -73,10 +42,10 @@ namespace backEndWeb
             {
                 conec.Open();
                 SqlCommand consulta = new SqlCommand("Insert INTO [dbo].[Usuario] " +
-                    "(id,Apellidos,DNI,Es_admin,Correo_electronico,Contrasena,nombre)" +
-                    "values (@id,@apellidos,@dni,@esAdmin,@correo,@contrasena,@nombre)", conec);
+                    "(Correo_electronico,Apellidos,DNI,Es_admin,Contrasena,nombre)" +
+                    "values (@correo,@apellidos,@dni,@esAdmin,@contrasena,@nombre)", conec);
 
-                consulta.Parameters.Add("@id", SqlDbType.Int).Value = user.idUser;
+                //consulta.Parameters.Add("@id", SqlDbType.Int).Value = user.idUser;
                 consulta.Parameters.Add("@apellidos", SqlDbType.Text).Value = user.apellidosUser;
                 consulta.Parameters.Add("@dni", SqlDbType.Text).Value = user.dniUser;
                 consulta.Parameters.Add("@esAdmin", SqlDbType.Bit).Value = user.esAdminUser;
@@ -106,7 +75,7 @@ namespace backEndWeb
             try
             {
                 conec.Open();
-                SqlDataAdapter consulta = new SqlDataAdapter("SELECT * FROM [dbo].[Usuario] WHERE id =" + user.idUser, conec);
+                SqlDataAdapter consulta = new SqlDataAdapter("SELECT * FROM [dbo].[Usuario] WHERE  Correo_electronico=" + user.correoUser, conec);
 
                 DataSet tablaDatos = new DataSet();
                 consulta.Fill(tablaDatos);
@@ -117,7 +86,7 @@ namespace backEndWeb
                     user.apellidosUser = tablaDatos.Tables[0].Rows[0]["Apellidos"].ToString();
                     user.dniUser = tablaDatos.Tables[0].Rows[0]["DNI"].ToString();
                     user.esAdminUser = Convert.ToBoolean(tablaDatos.Tables[0].Rows[0]["Es_admin"]);
-                    user.correoUser = tablaDatos.Tables[0].Rows[0]["Correo_electronico"].ToString();
+                  //  user.correoUser = tablaDatos.Tables[0].Rows[0]["Correo_electronico"].ToString();
                     user.contrasenaUser = tablaDatos.Tables[0].Rows[0]["Contrasena"].ToString();
                     user.nombreUser = tablaDatos.Tables[0].Rows[0]["nombre"].ToString();
 
@@ -148,7 +117,7 @@ namespace backEndWeb
             {
                 conec.Open();
 
-                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Usuario] WHERE id = " + user.idUser, conec);
+                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Usuario] WHERE Correo_electronico = " + user.correoUser, conec);
             }
             catch (Exception ex)
             {
@@ -174,16 +143,16 @@ namespace backEndWeb
 
                 SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Usuario] SET " +
                     "Apellidos=@apellidosuser, DNI= @dniuser, Es_admin=@esadminuser, " +
-                    "Correo_electronico= @correouser, Contrasena= @contrasenaUser, nombre= @nombre" +
-                    "WHERE id= @iduser", conec);
+                     "Contrasena= @contrasenaUser, nombre= @nombre" +
+                    "WHERE Correo_electronico= @correouser", conec);
 
-                consulta.Parameters.Add("@iduser", SqlDbType.Int).Value = user.idUser;
-                consulta.Parameters.Add("@apellidosuser", SqlDbType.Text).Value = user.apellidosUser;
+                //consulta.Parameters.Add("@iduser", SqlDbType.Int).Value = user.idUser;
+                consulta.Parameters.Add("@apellidosuser", SqlDbType.VarChar).Value = user.apellidosUser;
                 //consulta.Parameters.Add("@nombreuser", SqlDbType.Text).Value = user.nombreUser;
-                consulta.Parameters.Add("@dniuser", SqlDbType.Text).Value = user.dniUser;
+                consulta.Parameters.Add("@dniuser", SqlDbType.VarChar).Value = user.dniUser;
                 consulta.Parameters.Add("@esadminuser", SqlDbType.Bit).Value = user.esAdminUser;
-                consulta.Parameters.Add("@correouser", SqlDbType.Text).Value = user.correoUser;
-                consulta.Parameters.Add("@contrasenauser", SqlDbType.Text).Value = user.contrasenaUser;
+                consulta.Parameters.Add("@correouser", SqlDbType.VarChar).Value = user.correoUser;
+                consulta.Parameters.Add("@contrasenauser", SqlDbType.VarChar).Value = user.contrasenaUser;
                 consulta.Parameters.Add("@nombre", SqlDbType.VarChar).Value = user.nombreUser;
 
 
@@ -202,7 +171,7 @@ namespace backEndWeb
 
         }
 
-        public bool listarUsuarios(ref (int , string )[] usuarios )
+        public bool listarUsuarios(ref (string , string )[] usuarios )
         {
             //se itera sobre usuarios esperando un array vacío. Si queréis se puede cambiar
             bool respuesta = false;
@@ -212,16 +181,16 @@ namespace backEndWeb
             {
                 conec.Open();
 
-                SqlDataAdapter consulta = new SqlDataAdapter("SELECT id,nombre FROM [dbo].[Usuario]", conec);
+                SqlDataAdapter consulta = new SqlDataAdapter("SELECT Correo_electronico,nombre FROM [dbo].[Usuario]", conec);
                 SqlDataReader leerDatos = consulta.SelectCommand.ExecuteReader();
 
-                List<(int, string)> listaTemporal = new List<(int, string)>();
+                List<(string, string)> listaTemporal = new List<(string, string)>();
 
                 while (leerDatos.Read())
                 {
-                    int id = int.Parse(leerDatos["id"].ToString());
+                    string correo = leerDatos["Correo_electronico"].ToString();
                     string nombre = leerDatos["nombre"].ToString();
-                    listaTemporal.Add((id, nombre));
+                    listaTemporal.Add((correo, nombre));
                 }
 
                 

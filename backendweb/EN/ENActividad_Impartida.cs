@@ -10,9 +10,10 @@ namespace backendweb.EN
     public class ENActividad_Impartida
     {
         private int id_actividad;
-        private int id_monitor;
+        private int correo_monitor;
         private DateTime fecha;
         private int huecos;
+        private float precio;
         private TimeSpan hora_inicio;
         private TimeSpan hora_fin;
 
@@ -21,10 +22,10 @@ namespace backendweb.EN
             get { return id_actividad; }
             set { id_actividad = value; }
         }
-        public int idMonitor
+        public int correo_monitorActividad
         {
-            get { return id_monitor; }
-            set { id_monitor = value; }
+            get { return correo_monitor; }
+            set { correo_monitor = value; }
         }
         public DateTime fechaActividad
         {
@@ -38,6 +39,11 @@ namespace backendweb.EN
             set { huecos = value; }
         }
 
+        public float precioActividad
+        {
+            get { return precio; }
+            set { precio = value; }
+        }
         public TimeSpan horaInicioActividad
         {
             get { return hora_inicio; }
@@ -53,31 +59,34 @@ namespace backendweb.EN
         public ENActividad_Impartida()
         {
             id_actividad = 0;
-            id_monitor = 0;
+            correo_monitor = 0;
             fecha = new DateTime();
             huecos = 0;
             hora_inicio = new TimeSpan();
             hora_fin = new TimeSpan();
+            this.precio = 0;
         }
 
-        public ENActividad_Impartida(int id_actividad, int id_monitor, DateTime fecha, int huecos, TimeSpan hora_inicio, TimeSpan hora_fin)
+        public ENActividad_Impartida(int id_actividad, int correo, DateTime fecha, int huecos, int precio,TimeSpan hora_inicio, TimeSpan hora_fin)
         {
             this.id_actividad = id_actividad;
-            this.id_monitor = id_monitor;
+            this.correo_monitor = correo;
             this.fecha = fecha;
             this.huecos = huecos;
             this.hora_inicio = hora_inicio;
             this.hora_fin = hora_fin;
+            this.precio = precio;
         }
 
         public ENActividad_Impartida(ENActividad_Impartida actividad)
         {
             this.id_actividad = actividad.id_actividad;
-            this.id_monitor = actividad.id_monitor;
+            this.correo_monitor = actividad.correo_monitor;
             this.fecha = actividad.fecha;
             this.huecos = actividad.huecos;
             this.hora_inicio = actividad.hora_inicio;
             this.hora_fin = actividad.hora_fin;
+            this.precio = actividad.precio;
         }
 
         public bool readActividad()
@@ -101,8 +110,6 @@ namespace backendweb.EN
             {
                 return aux.createActividadImpartida(this);
             }
-
-
         }
 
         public bool updateActividad()

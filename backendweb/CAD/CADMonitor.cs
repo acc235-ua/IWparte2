@@ -30,8 +30,8 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Monitor] (id,especialidad,salario,telefono) + values(@id,@especialidad,@salario,@telefono", conec);
-                consulta.Parameters.AddWithValue("@id", monitor.id);
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Monitor] (Correo_electronico,Especialidad,Salario,Telefono) + values(@correo,@especialidad,@salario,@telefono", conec);
+                consulta.Parameters.AddWithValue("@correo", monitor.correo);
                 consulta.Parameters.AddWithValue("@especialidad", monitor.especialidad);
                 consulta.Parameters.AddWithValue("@salario", monitor.salario);
                 consulta.Parameters.AddWithValue("@telefono", monitor.telefono);
@@ -58,8 +58,8 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Monitor] WHERE id = @id", conec);
-                consulta.Parameters.AddWithValue("@id", monitor.id);
+                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Monitor] WHERE Correo_electronico = @correo", conec);
+                consulta.Parameters.AddWithValue("@correo", monitor.correo);
                 consulta.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -82,9 +82,9 @@ namespace backEndWeb
             try
             {
                 SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Monitor] SET, " +
-                    "especialidad=@especialidad, salario= @salario, telefono=@telefono" +
-                    "WHERE id= @id", conec);
-                consulta.Parameters.AddWithValue("@id", monitor.id);
+                    "Especialidad=@especialidad, Salario= @salario, Telefono=@telefono" +
+                    "WHERE Correo_electronico= @correo", conec);
+                consulta.Parameters.AddWithValue("@correo", monitor.correo);
                 consulta.Parameters.AddWithValue("@especialidad", monitor.especialidad);
                 consulta.Parameters.AddWithValue("@salario", monitor.salario);
                 consulta.Parameters.AddWithValue("@telefono", monitor.telefono);
@@ -111,7 +111,7 @@ namespace backEndWeb
             {
                 string query = @"
                 SELECT 
-                    u.id, 
+                    u.Correo_electronico, 
                     u.Nombre, 
                     u.Apellidos, 
                     u.DNI, 
@@ -122,14 +122,14 @@ namespace backEndWeb
                 FROM 
                     Usuario u
                 INNER JOIN 
-                    Monitor m ON u.id = m.id";
+                    Monitor m ON u.Correo_electronico = m.Correo_electronico";
 
                 SqlCommand consulta = new SqlCommand(query, conec);
                 SqlDataReader reader = consulta.ExecuteReader();
                 while (reader.Read())
                 {
                     ENMonitor monitor = new ENMonitor();
-                    monitor.id = reader.GetInt32(0);
+                    monitor.correo = reader.GetString(0);
                     monitor.Nombre = reader.GetString(1);
                     monitor.Apellidos = reader.GetString(2);
                     monitor.DNI = reader.GetString(3);
@@ -158,12 +158,12 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Monitor] WHERE id = @id", conec);
-                consulta.Parameters.AddWithValue("@id", monitor.id);
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Monitor] WHERE Correo_electronico = @correo", conec);
+                consulta.Parameters.AddWithValue("@correo", monitor.correo);
                 SqlDataReader reader = consulta.ExecuteReader();
                 if (reader.Read())
                 {
-                    monitor.id = reader.GetInt32(0);
+                    monitor.correo = reader.GetString(0);
                     monitor.especialidad = reader.GetString(1);
                     monitor.salario = reader.GetFloat(2);
                     monitor.telefono = reader.GetString(3);

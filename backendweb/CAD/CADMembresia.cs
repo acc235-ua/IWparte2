@@ -29,7 +29,7 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Membresia] (id,Descrocion,Tipo,Precio) + values(@id,@Descripcion,@Tipo,@Precio", conec);
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Membresia] (Id,Descripcion,Tipo,Precio) + values(@id,@Descripcion,@Tipo,@Precio", conec);
                 consulta.Parameters.AddWithValue("@id", membresia.id);
                 consulta.Parameters.AddWithValue("@Descripcion", membresia.Descripcion);
                 consulta.Parameters.AddWithValue("@Tipo", membresia.Tipo);
@@ -55,7 +55,7 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Membresia] WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Membresia] WHERE Id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", membresia.id);
                 consulta.ExecuteNonQuery();
                 respuesta = true;
@@ -78,11 +78,11 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Membresia] WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Membresia] WHERE Id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", membresia.id);
                 SqlDataReader dr = consulta.ExecuteReader();
                 dr.Read();
-                membresia.id = int.Parse(dr["id"].ToString());
+                membresia.id = int.Parse(dr["Id"].ToString());
                 membresia.Descripcion = dr["Descripcion"].ToString();
                 membresia.Tipo = dr["Tipo"].ToString();
                 membresia.Precio = float.Parse(dr["Precio"].ToString());
@@ -107,7 +107,7 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Membresia] SET Descripcion = @Descripcion, Tipo = @Tipo, Precio = @Precio WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Membresia] SET Descripcion = @Descripcion, Tipo = @Tipo, Precio = @Precio WHERE Id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", membresia.id);
                 consulta.Parameters.AddWithValue("@Descripcion", membresia.Descripcion);
                 consulta.Parameters.AddWithValue("@Tipo", membresia.Tipo);
@@ -134,11 +134,11 @@ namespace backEndWeb
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Membresia] WHERE id = @id", conec);
-                consulta.Parameters.AddWithValue("id", membresia.id);
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Membresia] WHERE Id = @id", conec);
+                consulta.Parameters.AddWithValue("@id", membresia.id);
                 SqlDataReader reader = consulta.ExecuteReader();
                 reader.Read();
-                membresia.id = int.Parse(reader["id"].ToString());
+                membresia.id = int.Parse(reader["Id"].ToString());
                 membresia.Descripcion = reader["Descripcion"].ToString();
                 membresia.Tipo = reader["Tipo"].ToString();
                 membresia.Precio = float.Parse(reader["Precio"].ToString());

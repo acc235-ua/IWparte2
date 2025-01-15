@@ -9,18 +9,18 @@ namespace backendweb.EN
 {
     public class ENReserva
     {
-        private int id_socio;
+        private String Correo_Socio;
         private int id_actividad;
-        private int id_monitor;
+        private String Correo_monitor;
         private DateTime fecha_alta;
         private DateTime fecha_actividad;
         private bool activa;
 
 
-        public int idMonitor
+        public String CorreoMonitorActividad
         {
-            get { return id_monitor; }
-            set { id_monitor = value; }
+            get { return Correo_monitor; }
+            set { Correo_monitor = value; }
         }
 
         public DateTime fechaActividad
@@ -28,10 +28,10 @@ namespace backendweb.EN
             get { return fecha_actividad; }
             set { fecha_actividad = value; }
         }
-        public int idSocio
+        public String CorreoSocioActividad
         {
-            get { return id_socio; }
-            set { id_socio = value; }
+            get { return Correo_Socio; }
+            set { Correo_Socio = value; }
         }
         public int idActividad
         {
@@ -52,29 +52,36 @@ namespace backendweb.EN
 
         public ENReserva()
         {
-            id_socio = 0;
+
+            CorreoSocioActividad = "";
+            CorreoMonitorActividad = ""; 
+            
             id_actividad = 0;
             fecha_alta = new DateTime();
+            fecha_actividad = new DateTime();
             activa = false;
+
+
+
         }
-        public ENReserva(int id_socio, int id_monitor, int id_actividad, DateTime fecha_actividad, DateTime fecha_alta, bool activa)
+        public ENReserva(String Correo_Socio ,String Correo_Monitor, int id_actividad, DateTime fecha_actividad, DateTime fecha_alta, bool activa)
         {
-            this.id_socio = id_socio;
+            this.Correo_Socio = Correo_Socio;
             this.id_actividad = id_actividad;
             this.fecha_alta = fecha_alta;
             this.activa = activa;
-            this.id_monitor = id_monitor;
+            this.Correo_monitor = Correo_Monitor;
             this.fecha_actividad = fecha_actividad;
 
         }
 
         public ENReserva(ENReserva reserva)
         {
-            this.id_socio = reserva.idSocio;
+            this.CorreoSocioActividad = reserva.CorreoSocioActividad;
             this.id_actividad = reserva.idActividad;
             this.fecha_alta = reserva.fechaAltaReserva;
             this.activa = reserva.activaReserva;
-            this.id_monitor = reserva.idMonitor;
+            this.CorreoMonitorActividad = reserva.CorreoMonitorActividad;
             this.fecha_actividad = reserva.fechaActividad;
 
         }

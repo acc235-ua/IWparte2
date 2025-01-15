@@ -35,13 +35,15 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Actividad_impartida] (id_actividad, id_monitor, fecha,hora_fin, hora_inicio,huecos) VALUES (@id_actividad, @id_monitor, @fecha, @huecos, @hora_inicio, @hora_fin)", conec);
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Actividad_impartida] (Id_Actividad,Correo_Monitor,Fecha,Hora_Fin,Hora_Inicio,Huecos,Precio) VALUES (@id_actividad, @correo_monitor, @fecha, @huecos, @hora_inicio, @hora_fin,@huecos,@precio)", conec);
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = actividadImpartida.idActividad;
-                consulta.Parameters.Add("@id_monitor", SqlDbType.Int).Value = actividadImpartida.idMonitor;
+                consulta.Parameters.Add("@correo_monitor", SqlDbType.Int).Value = actividadImpartida.correo_monitorActividad;
                 consulta.Parameters.Add("@fecha", SqlDbType.DateTime).Value = actividadImpartida.fechaActividad;
                 consulta.Parameters.Add("@huecos", SqlDbType.Int).Value = actividadImpartida.huecosActividad;
                 consulta.Parameters.Add("@hora_inicio", SqlDbType.Time).Value = actividadImpartida.horaInicioActividad;
                 consulta.Parameters.Add("@hora_fin", SqlDbType.Time).Value = actividadImpartida.horaFinActividad;
+                consulta.Parameters.Add("@precio", SqlDbType.Float).Value = actividadImpartida.precioActividad;
+
                 consulta.ExecuteNonQuery();
                 creado = true;
             }
@@ -64,22 +66,23 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Actividad_impartida] WHERE id_monitor = @id_monitor AND id_actividad= @id_actividad and fecha = @fecha", conec);
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Actividad_impartida] WHERE Correo_Monitor = @correo_monitor AND Id_Actividad= @id_actividad and Fecha = @fecha", conec);
 
-                consulta.Parameters.Add("@id_monitor", SqlDbType.Int).Value = act.idMonitor;
+                consulta.Parameters.Add("@Correo_monitor", SqlDbType.Int).Value = act.correo_monitorActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = act.idActividad;
                 consulta.Parameters.Add("@fecha", SqlDbType.DateTime).Value = act.fechaActividad;
                 consulta.ExecuteReader();
                 SqlDataReader reader = consulta.ExecuteReader();
                 if (reader.Read())
                 {
-                    act.idActividad = int.Parse(reader["id_actividad"].ToString());
-                    act.idMonitor = int.Parse(reader["id_monitor"].ToString());
-                    act.fechaActividad = DateTime.Parse(reader["fecha"].ToString());
-                    act.huecosActividad = int.Parse(reader["huecos"].ToString());
-                    act.horaInicioActividad = TimeSpan.Parse(reader["hora_inicio"].ToString());
-                    act.horaFinActividad = TimeSpan.Parse(reader["hora_fin"].ToString());
-                    
+                    act.idActividad = int.Parse(reader["Id_Actividad"].ToString());
+                    act.correo_monitorActividad = int.Parse(reader["Correo_Monitor"].ToString());
+                    act.fechaActividad = DateTime.Parse(reader["Fecha"].ToString());
+                    act.huecosActividad = int.Parse(reader["Huecos"].ToString());
+                    act.horaInicioActividad = TimeSpan.Parse(reader["Hora_Inicio"].ToString());
+                    act.horaFinActividad = TimeSpan.Parse(reader["Hora_Fin"].ToString());
+                    act.precioActividad = float.Parse(reader["Precio"].ToString());
+
                     leido = true;
                 }
             }
@@ -104,9 +107,9 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Actividad_impartida] WHERE id_actividad = @id_actividad AND id_monitor= @id_monitor AND fecha= @fecha", conec);
+                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Actividad_impartida] WHERE Id_Actividad = @id_actividad AND Correo_Monitor= @correo_monitor AND Fecha= @fecha", conec);
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = actividadImpartida.idActividad;
-                consulta.Parameters.Add("@id_monitor", SqlDbType.Int).Value = actividadImpartida.idMonitor;
+                consulta.Parameters.Add("@correo_monitor", SqlDbType.Int).Value = actividadImpartida.correo_monitorActividad;
                 consulta.Parameters.Add("@fecha", SqlDbType.DateTime).Value = actividadImpartida.fechaActividad;
                 consulta.ExecuteNonQuery();
                 borrado = true;
@@ -131,17 +134,18 @@ namespace backendweb.CAD
             {
                 conec.Open();
                 SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Usuario] SET, " +
-                    "id_actividad=@id_actividad, id_monitor= @id_monitor, fecha=@fecha, " +
-                    "huecos= @huecos, hora_inicio= @hora_inicio, hora_fin= @hora_fin" +
-                    "WHERE id_actividad= @id_actividad AND id_monitor= @id_monitor AND fecha= @fecha", conec);
+                    "Id_Actividad=@id_actividad,Correo_Monitor= @correo_monitor, Fecha=@fecha, " +
+                    "Huecos= @huecos, Hora_Inicio= @hora_inicio, Hora_Fin= @hora_fin , Precio = @precio" +
+                    "WHERE Id_Actividad= @id_actividad AND Correo_Monitor= @correo_monitor AND Fecha= @fecha", conec);
 
 
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = actividadImpartida.idActividad;
-                consulta.Parameters.Add("@id_monitor", SqlDbType.Int).Value = actividadImpartida.idMonitor;
+                consulta.Parameters.Add("@correo", SqlDbType.Int).Value = actividadImpartida.correo_monitorActividad;
                 consulta.Parameters.Add("@fecha", SqlDbType.DateTime).Value = actividadImpartida.fechaActividad;
                 consulta.Parameters.Add("@huecos", SqlDbType.Int).Value = actividadImpartida.huecosActividad;
                 consulta.Parameters.Add("@hora_inicio", SqlDbType.Time).Value = actividadImpartida.horaInicioActividad;
                 consulta.Parameters.Add("@hora_fin", SqlDbType.Time).Value = actividadImpartida.horaFinActividad;
+                consulta.Parameters.Add("@precio", SqlDbType.Int).Value = actividadImpartida.precioActividad;
 
                 consulta.ExecuteNonQuery();
                 borrado = true;
@@ -160,25 +164,27 @@ namespace backendweb.CAD
         }
 
 
-        public bool listarActividadesImpartidas(ref (int, int, DateTime)[] usuarios)
+        public bool listarActividadesImpartidas(ref (int, string, DateTime)[] usuarios)
         {
             SqlConnection conec = new SqlConnection(constring);
             bool respuesta = false;
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("SELECT id_actividad, id_monitor , fecha FROM [dbo].[Actividad_impartida]", conec);
+                SqlCommand consulta = new SqlCommand("SELECT Id_Actividad, Correo_Monitor , Fecha FROM [dbo].[Actividad_impartida]", conec);
 
                 SqlDataReader leerDatos = consulta.ExecuteReader();
-                List<(int, int, DateTime)> listaTemporal = new List<(int, int, DateTime)>();
+                List<(int, string, DateTime)> listaTemporal = new List<(int, string, DateTime)>();
 
                 while (leerDatos.Read())
                 {
-                    int id_actividad = int.Parse(leerDatos["id_actividad"].ToString());
-                    int id_monitor = int.Parse(leerDatos["id_monitor"].ToString());
-                    DateTime fecha = DateTime.Parse(leerDatos["fecha"].ToString());
-                    listaTemporal.Add((id_actividad, id_monitor, fecha));
+                    int id_actividad = int.Parse(leerDatos["Id_Actividad"].ToString());
+                     string correo_monitor = leerDatos["Correo_Monitor"].ToString();
+                    DateTime fecha = DateTime.Parse(leerDatos["Fecha"].ToString());
+                    listaTemporal.Add((id_actividad, correo_monitor, fecha));
+
                 }
+
                 usuarios = listaTemporal.ToArray();
                 respuesta = true;
             }

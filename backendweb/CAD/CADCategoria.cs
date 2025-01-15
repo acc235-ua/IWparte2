@@ -28,7 +28,7 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Categoria] (id,Nombre) + values(@id,@Nombre", conec);
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Categoria] (Id,Nombre) + values(@id,@Nombre", conec);
                 consulta.Parameters.AddWithValue("@id", categoria.id);
                 consulta.Parameters.AddWithValue("@Nombre", categoria.Nombre);
                 consulta.ExecuteNonQuery();
@@ -52,7 +52,7 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Categoria] WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Categoria] WHERE Id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", categoria.id);
                 consulta.ExecuteNonQuery();
                 respuesta = true;
@@ -75,7 +75,7 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Categoria] SET Nombre = @Nombre WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Categoria] SET Nombre = @Nombre WHERE Id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", categoria.id);
                 consulta.Parameters.AddWithValue("@Nombre", categoria.Nombre);
                 consulta.ExecuteNonQuery();
@@ -99,7 +99,7 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Categoria] WHERE id = @id", conec);
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Categoria] WHERE Id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", categoria.id);
                 SqlDataReader reader = consulta.ExecuteReader();
                 if (reader.Read())

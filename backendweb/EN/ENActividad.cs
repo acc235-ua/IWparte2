@@ -13,7 +13,7 @@ namespace backendweb.EN
         private int id;
         private string nombre;
         private string descripcion;
-        private int precio;
+        private float precio;
         private int id_categoria;
 
         public int idActividad
@@ -32,7 +32,7 @@ namespace backendweb.EN
             set { descripcion = value; }
         }
 
-        public int precioActividad
+        public float precioActividad
         {
             get { return precio; }
             set { precio = value; }

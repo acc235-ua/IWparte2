@@ -11,7 +11,7 @@ namespace backEndWeb
 {
     public class ENSocio
     {
-        public int id;
+        public string correo;
         public int Saldo;
         public string Estado;
         public int MembresiaId;
@@ -19,12 +19,12 @@ namespace backEndWeb
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
         public string DNI { get; set; }
-        public string CorreoElectronico { get; set; }
+        //public string CorreoElectronico { get; set; }
 
-        public int idSocio
+        public string correoSocio
         {
-            get { return id; }
-            set { id = value; }
+            get { return correo; }
+            set { correo = value; }
         }
 
         public int SaldoSocio
@@ -48,21 +48,21 @@ namespace backEndWeb
 
         public ENSocio()
         {
-            id = 0;
+            correoSocio = "";
             Saldo = 0;
             Estado = "";
         }
 
-        public ENSocio(int id, int Saldo, string Estado)
+        public ENSocio(string co, int Saldo, string Estado)
         {
-            this.id = id;
+            this.correoSocio = co;
             this.Saldo = Saldo;
             this.Estado = Estado;
         }
 
         public ENSocio(ENSocio socio)
         {
-            this.id = socio.id;
+            this.correoSocio = socio.correoSocio;
             this.Saldo = socio.Saldo;
             this.Estado = socio.Estado;
         }

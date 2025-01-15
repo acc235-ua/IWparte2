@@ -8,8 +8,7 @@ namespace backEndWeb
 {
     public class ENMonitor
     {
-
-        public int id;
+        public string correo;
         public string especialidad;
         public float salario;
         public string telefono;
@@ -19,12 +18,11 @@ namespace backEndWeb
         public string DNI { get; set; }
         public string CorreoElectronico { get; set; }
 
-        public int idMonitor
+        public string correoMonitor
         {
-            get { return id; }
-            set { id = value; }
+            get { return correo; }
+            set { correo = value; }
         }
-
         public string especialidadMonitor
         {
             get { return especialidad; }
@@ -45,15 +43,15 @@ namespace backEndWeb
 
         public ENMonitor()
         {
-            id = 0;
+            correoMonitor = "";
             especialidad = "";
             salario = 0;
             telefono = "";
         }
 
-        public ENMonitor(int id, string especialidad, float salario, string telefono)
+        public ENMonitor(string correo, string especialidad, float salario, string telefono)
         {
-            this.id = id;
+            correoMonitor = correo;
             this.especialidad = especialidad;
             this.salario = salario;
             this.telefono = telefono;
@@ -61,7 +59,7 @@ namespace backEndWeb
 
         public ENMonitor(ENMonitor monitor)
         {
-            this.id = monitor.id;
+            this.correo = monitor.correo;
             this.especialidad = monitor.especialidad;
             this.salario = monitor.salario;
             this.telefono = monitor.telefono;

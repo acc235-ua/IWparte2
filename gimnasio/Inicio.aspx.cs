@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace gimnasio
 {
-    public partial class Contact : Page
+    public partial class Inicio : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

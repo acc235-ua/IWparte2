@@ -17,6 +17,11 @@ namespace gimnasio
         {
             // Limpiar mensajes de error
             errorCorreo.Text = "";
+            errorApellidos.Text = "";
+            errorNombre.Text = "";
+            errorContrasena.Text = "";
+            errorDni.Text = "";
+            errorTarifa.Text = "";
 
             // Validar el correo electrónico
             if (!email.Text.Contains("@"))
@@ -36,7 +41,37 @@ namespace gimnasio
             string dni = DNI.Text.Trim();
             if (!Regex.IsMatch(dni, @"^\d{8}[A-Za-z]$"))
             {
-                errorCorreo.Text = "Por favor, ingresa un DNI válido. Ejemplo: 12345678A.";
+                errorDni.Text = "Por favor, ingresa un DNI válido. Ejemplo: 12345678A.";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(contrasena.Text))
+            {
+                errorContrasena.Text = "Por favor, introduce una contraseña";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(email.Text))
+            {
+                errorCorreo.Text = "Por favor, introduce un correo electrónico";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(DNI.Text))
+            {
+                errorDni.Text = "Por favor, introduce un DNI";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(nombre.Text))
+            {
+                errorNombre.Text = "Por favor, introduce un nombre";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(apellidos.Text))
+            {
+                errorApellidos.Text = "Por favor, introduce tu/s apellido/s";
                 return;
             }
 
@@ -67,7 +102,7 @@ namespace gimnasio
 
             if (membresiaId == 0)
             {
-                errorCorreo.Text = "La tarifa seleccionada no es válida.";
+                errorTarifa.Text = "La tarifa seleccionada no es válida.";
                 return;
             }
 

@@ -51,6 +51,15 @@ namespace gimnasio
         protected global::System.Web.UI.WebControls.TextBox nombre;
 
         /// <summary>
+        /// Control errorNombre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorNombre;
+
+        /// <summary>
         /// Control apellidos.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace gimnasio
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox apellidos;
+
+        /// <summary>
+        /// Control errorApellidos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorApellidos;
 
         /// <summary>
         /// Control DNI.
@@ -69,6 +87,15 @@ namespace gimnasio
         protected global::System.Web.UI.WebControls.TextBox DNI;
 
         /// <summary>
+        /// Control errorDni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorDni;
+
+        /// <summary>
         /// Control tarifa.
         /// </summary>
         /// <remarks>
@@ -78,6 +105,15 @@ namespace gimnasio
         protected global::System.Web.UI.WebControls.DropDownList tarifa;
 
         /// <summary>
+        /// Control errorTarifa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorTarifa;
+
+        /// <summary>
         /// Control contrasena.
         /// </summary>
         /// <remarks>
@@ -85,6 +121,15 @@ namespace gimnasio
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox contrasena;
+
+        /// <summary>
+        /// Control errorContrasena.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorContrasena;
 
         /// <summary>
         /// Control btnRegistrar.

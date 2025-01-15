@@ -21,6 +21,7 @@
                     <li><a href="Tarifas.aspx" class="hover:text-gray-300">Tarifas</a></li>
                     <li><a href="#" class="hover:text-gray-300">Instalaciones</a></li>
                     <li><a href="#" class="hover:text-gray-300">Contacto</a></li>
+                    <li><a href="Login.aspx" class="hover:text-gray-300">Iniciar Sesión</a></li>
                 </ul>
             </nav>
         </div>

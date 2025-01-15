@@ -24,6 +24,10 @@
                         ID="nombre" 
                         runat="server" 
                         CssClass="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <asp:Label 
+                        ID="errorNombre" 
+                        runat="server" 
+                        CssClass="text-red-500 text-sm" />
                 </div>
                 <!-- Campo de Apellidos -->
                 <div class="mb-4">
@@ -32,6 +36,10 @@
                         ID="apellidos" 
                         runat="server" 
                         CssClass="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <asp:Label 
+                        ID="errorApellidos" 
+                        runat="server" 
+                        CssClass="text-red-500 text-sm" />
                 </div>
                 <!-- Campo de dni -->
                 <div class="mb-4">
@@ -40,6 +48,10 @@
                         ID="DNI" 
                         runat="server" 
                         CssClass="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <asp:Label 
+                        ID="errorDni" 
+                        runat="server" 
+                        CssClass="text-red-500 text-sm" />
                 </div>
                 <!-- Selección de Tarifa -->
                 <div class="mb-4">
@@ -53,6 +65,10 @@
                         <asp:ListItem Text="Jubilado" Value="Jubilado" />
                         <asp:ListItem Text="Standard" Value="Standard" />
                     </asp:DropDownList>
+                    <asp:Label 
+                        ID="errorTarifa" 
+                        runat="server" 
+                        CssClass="text-red-500 text-sm" />
                 </div>
                 <!-- Campo de password -->
                 <div class="mb-4">
@@ -61,6 +77,10 @@
                         ID="contrasena" TextMode="Password"
                         runat="server" 
                         CssClass="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <asp:Label 
+                        ID="errorContrasena" 
+                        runat="server" 
+                        CssClass="text-red-500 text-sm" />
                 </div>
                 <!-- Botón de Registro -->
                 <div class="text-center">

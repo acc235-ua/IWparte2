@@ -6,7 +6,7 @@
         <h2 class="text-3xl md:text-4xl font-bold mb-4">El mejor gimnasio para ponerte en forma</h2>
         <img src="https://via.placeholder.com/800x400?text=Gym+Image" alt="Gimnasio" class="w-full max-w-full md:max-w-4xl mx-auto rounded-lg shadow-lg">
         <div class="mt-6">
-            <a href="#" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300">Inscríbete</a>
+            <a href="Registro.aspx" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300">Inscríbete</a>
         </div>
     </section>
 

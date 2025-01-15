@@ -19,7 +19,6 @@
                 <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
                     <li><a href="Inicio.aspx" class="hover:text-gray-300">Inicio</a></li>
                     <li><a href="Tarifas.aspx" class="hover:text-gray-300">Tarifas</a></li>
-                    <li><a href="#" class="hover:text-gray-300">Actividades</a></li>
                     <li><a href="#" class="hover:text-gray-300">Instalaciones</a></li>
                     <li><a href="#" class="hover:text-gray-300">Contacto</a></li>
                 </ul>
@@ -34,7 +33,7 @@
 
     <!-- Footer -->
     <footer class="bg-blue-500 text-white text-center py-4">
-        <p>&copy; 2024 Fit Gym. Todos los derechos reservados.</p>
+        <p>&copy; 2025 Fit Gym. Todos los derechos reservados.</p>
     </footer>
 </body>
 

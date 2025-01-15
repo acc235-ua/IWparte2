@@ -1,147 +1,205 @@
-
--- Creación de las tablas
-CREATE TABLE Usuario (
-    id INT PRIMARY KEY,
-    Apellidos VARCHAR(255) NOT NULL,
-    DNI VARCHAR(20) UNIQUE NOT NULL,
-    Es_admin BIT NOT NULL DEFAULT 0,
-    Correo_electronico VARCHAR(255) UNIQUE NOT NULL,
-    Contrasena VARCHAR(255) NOT NULL
+-- Actualizar la tabla Usuario
+CREATE TABLE [dbo].[Usuario] (
+    [Correo_electronico] VARCHAR (255) NOT NULL PRIMARY KEY, -- Clave primaria
+    [Apellidos]          VARCHAR (255) NOT NULL,
+    [DNI]                VARCHAR (20)  NOT NULL UNIQUE,      -- Mantener único
+    [Es_admin]           BIT           DEFAULT ((0)) NOT NULL,
+    [Contrasena]         VARCHAR (255) NOT NULL,
+    [nombre]             NVARCHAR (100) NOT NULL
 );
 
-CREATE TABLE Admin (
-    id INT PRIMARY KEY,
-    FOREIGN KEY (id) REFERENCES Usuario(id) ON DELETE CASCADE
+-- Crear la tabla Socio
+CREATE TABLE [dbo].[Socio] (
+    [Correo_electronico] VARCHAR (255) NOT NULL,             -- Referencia a Usuario
+    [Saldo]              INT           DEFAULT ((0)) NULL,
+    [Estado]             VARCHAR (50)  NOT NULL,
+    PRIMARY KEY CLUSTERED ([Correo_electronico] ASC),
+    FOREIGN KEY ([Correo_electronico]) REFERENCES [dbo].[Usuario] ([Correo_electronico]) ON DELETE CASCADE,
+    CHECK ([Saldo] >= (0))
 );
 
-CREATE TABLE Socio (
-    id INT PRIMARY KEY,
-    Saldo INT CHECK (Saldo >= 0) DEFAULT 0,
-    Estado VARCHAR(50) NOT NULL,
-    FOREIGN KEY (id) REFERENCES Usuario(id) ON DELETE CASCADE
+-- Crear la tabla Monitor
+CREATE TABLE [dbo].[Monitor] (
+    [Correo_electronico] VARCHAR (255) NOT NULL,             -- Referencia a Usuario
+    [especialidad]       VARCHAR (255) NOT NULL,
+    [salario]            FLOAT (53)    NOT NULL,
+    [telefono]           VARCHAR (20)  NOT NULL,
+    PRIMARY KEY CLUSTERED ([Correo_electronico] ASC),
+    FOREIGN KEY ([Correo_electronico]) REFERENCES [dbo].[Usuario] ([Correo_electronico]) ON DELETE CASCADE,
+    CHECK ([salario] >= (0))
 );
 
-CREATE TABLE Membresia (
-    Id INT PRIMARY KEY,
-    Descripcion VARCHAR(255) NOT NULL,
-    Tipo VARCHAR(50) NOT NULL,
-    Precio FLOAT CHECK (Precio >= 0) NOT NULL
+-- Crear la tabla Admin
+CREATE TABLE [dbo].[Admin] (
+    [Correo_electronico] VARCHAR (255) NOT NULL,             -- Referencia a Usuario
+    PRIMARY KEY CLUSTERED ([Correo_electronico] ASC),
+    FOREIGN KEY ([Correo_electronico]) REFERENCES [dbo].[Usuario] ([Correo_electronico]) ON DELETE CASCADE
 );
 
-CREATE TABLE Monitor (
-    id INT PRIMARY KEY,
-    especialidad VARCHAR(255) NOT NULL,
-    salario FLOAT CHECK (salario >= 0) NOT NULL,
-    telefono VARCHAR(20) NOT NULL,
-    FOREIGN KEY (id) REFERENCES Usuario(id) ON DELETE CASCADE
+
+-- Crear la tabla Membresia primero ya que Socio depende de ella
+CREATE TABLE [dbo].[Membresia] (
+    Id           INT PRIMARY KEY,
+    Descripcion  VARCHAR(255) NOT NULL,
+    Tipo         VARCHAR(50) NOT NULL,
+    Precio       FLOAT CHECK (Precio >= 0) NOT NULL
 );
 
-CREATE TABLE Categoria (
-    id INT PRIMARY KEY,
+-- Crear la tabla Usuario
+CREATE TABLE [dbo].[Usuario] (
+    Correo_electronico VARCHAR(255) NOT NULL PRIMARY KEY,
+    Apellidos          VARCHAR(255) NOT NULL,
+    DNI                VARCHAR(20)  NOT NULL UNIQUE,
+    Es_admin           BIT          DEFAULT ((0)) NOT NULL,
+    Contrasena         VARCHAR(255) NOT NULL,
+    Nombre             NVARCHAR(100) NOT NULL
+);
+
+-- Crear la tabla Socio
+CREATE TABLE [dbo].[Socio] (
+    Correo_electronico VARCHAR(255) NOT NULL PRIMARY KEY,
+    Saldo              INT          DEFAULT ((0)) CHECK (Saldo >= 0),
+    Estado             VARCHAR(50)  NOT NULL,
+    MembresiaId        INT          NULL,
+    FOREIGN KEY (Correo_electronico) REFERENCES [dbo].[Usuario] (Correo_electronico) ON DELETE CASCADE,
+    FOREIGN KEY (MembresiaId) REFERENCES [dbo].[Membresia] (Id) ON DELETE SET NULL
+);
+
+-- Crear la tabla Monitor
+CREATE TABLE [dbo].[Monitor] (
+    Correo_electronico VARCHAR(255) NOT NULL PRIMARY KEY,
+    Especialidad       VARCHAR(255) NOT NULL,
+    Salario            FLOAT CHECK (Salario >= 0) NOT NULL,
+    Telefono           VARCHAR(20) NOT NULL,
+    FOREIGN KEY (Correo_electronico) REFERENCES [dbo].[Usuario] (Correo_electronico) ON DELETE CASCADE
+);
+
+-- Crear la tabla Admin
+CREATE TABLE [dbo].[Admin] (
+    Correo_electronico VARCHAR(255) NOT NULL PRIMARY KEY,
+    FOREIGN KEY (Correo_electronico) REFERENCES [dbo].[Usuario] (Correo_electronico) ON DELETE CASCADE
+);
+
+-- Crear la tabla Categoria
+CREATE TABLE [dbo].[Categoria] (
+    Id     INT PRIMARY KEY,
     Nombre VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Actividad (
-    id INT PRIMARY KEY,
-    Nombre VARCHAR(255) NOT NULL,
+-- Crear la tabla Actividad
+CREATE TABLE [dbo].[Actividad] (
+    Id           INT PRIMARY KEY,
+    Nombre       VARCHAR(255) NOT NULL,
+    Descripcion  VARCHAR(255),
+    Precio       FLOAT CHECK (Precio >= 0) NOT NULL,
+    Id_Categoria INT NOT NULL,
+    FOREIGN KEY (Id_Categoria) REFERENCES [dbo].[Categoria] (Id) ON DELETE CASCADE
+);
+
+-- Crear la tabla Actividad_impartida
+CREATE TABLE [dbo].[Actividad_impartida] (
+    Id_Actividad    INT NOT NULL,
+    Correo_Monitor  VARCHAR(255) NOT NULL,
+    Fecha           DATE NOT NULL,
+    Hora_Inicio     TIME NOT NULL,
+    Hora_Fin        TIME NOT NULL,
+    Huecos          INT CHECK (Huecos >= 0) NOT NULL,
+    Precio          FLOAT CHECK (Precio >= 0) NOT NULL,
+    PRIMARY KEY (Id_Actividad, Correo_Monitor, Fecha),
+    FOREIGN KEY (Id_Actividad) REFERENCES [dbo].[Actividad] (Id) ON DELETE CASCADE,
+    FOREIGN KEY (Correo_Monitor) REFERENCES [dbo].[Monitor] (Correo_electronico) ON DELETE CASCADE
+);
+
+-- Crear la tabla Reserva
+CREATE TABLE [dbo].[Reserva] (
+    Correo_Socio        VARCHAR(255) NOT NULL,
+    Id_Actividad        INT NOT NULL,
+    Correo_Monitor      VARCHAR(255) NOT NULL,
+    Fecha_Actividad     DATE NOT NULL,
+    Fecha_Alta          DATE NOT NULL,
+    Activa              BIT DEFAULT ((1)) NOT NULL,
+    PRIMARY KEY (Correo_Socio, Id_Actividad, Correo_Monitor, Fecha_Actividad),
+    FOREIGN KEY (Correo_Socio) REFERENCES [dbo].[Socio] (Correo_electronico) ON DELETE NO ACTION,
+    FOREIGN KEY (Id_Actividad, Correo_Monitor, Fecha_Actividad) 
+        REFERENCES [dbo].[Actividad_impartida] (Id_Actividad, Correo_Monitor, Fecha) ON DELETE NO ACTION
+);
+
+-- Crear la tabla Informes
+CREATE TABLE [dbo].[Informes] (
+    Id          INT PRIMARY KEY,
+    Titulo      VARCHAR(255) NOT NULL,
     Descripcion VARCHAR(255),
-    precio FLOAT CHECK (precio >= 0) NOT NULL,
-    id_categoria INT NOT NULL,
-    FOREIGN KEY (id_categoria) REFERENCES Categoria(id) ON DELETE CASCADE
+    Fecha       DATE NOT NULL,
+    Estado      VARCHAR(50) NOT NULL,
+    Query       VARCHAR(255)
 );
 
-CREATE TABLE Actividad_impartida (
-    id_actividad INT,
-    id_monitor INT,
-    fecha DATE NOT NULL,
-    hora_fin TIME NOT NULL,
-    hora_inicio TIME NOT NULL,
-    huecos INT CHECK (huecos >= 0) NOT NULL,
-    precio FLOAT CHECK (precio >= 0) NOT NULL,
-    PRIMARY KEY (id_actividad, id_monitor, fecha),
-    FOREIGN KEY (id_actividad) REFERENCES Actividad(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_monitor) REFERENCES Monitor(id) ON DELETE CASCADE
-);
+-- Crear índices
+CREATE INDEX idx_usuario_correo ON [dbo].[Usuario] (Correo_electronico);
+CREATE INDEX idx_usuario_dni ON [dbo].[Usuario] (DNI);
+CREATE INDEX idx_actividad_impartida_fecha ON [dbo].[Actividad_impartida] (Fecha);
+CREATE INDEX idx_reserva_fecha ON [dbo].[Reserva] (Fecha_Alta);
 
-CREATE TABLE Reserva (
-    id_socio INT,
-    id_actividad INT,
-    fecha_alta DATE NOT NULL,
-    activa BIT NOT NULL DEFAULT 1,
-    PRIMARY KEY (id_socio, id_actividad),
-    FOREIGN KEY (id_socio) REFERENCES Socio(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_actividad) REFERENCES Actividad(id) ON DELETE CASCADE
-);
-
-CREATE TABLE Informes (
-    id INT PRIMARY KEY,
-    Titulo VARCHAR(255) NOT NULL,
-    Descripcion VARCHAR(255),
-    Fecha DATE NOT NULL,
-    Estado VARCHAR(50) NOT NULL,
-    Query VARCHAR(255)
-);
-
--- Creación de índices
-CREATE INDEX idx_usuario_correo ON Usuario (Correo_electronico);
-CREATE INDEX idx_usuario_dni ON Usuario (DNI);
-CREATE INDEX idx_actividad_impartida_fecha ON Actividad_impartida (fecha);
-CREATE INDEX idx_reserva_fecha ON Reserva (fecha_alta);
-
--- Triggers
-
--- Trigger para evitar reservas con saldo insuficiente
+-- Crear triggers después de las tablas
 GO
 CREATE TRIGGER before_insert_reserva
-ON Reserva
-FOR INSERT
+ON [dbo].[Reserva]
+INSTEAD OF INSERT
 AS
 BEGIN
     DECLARE @actividad_precio FLOAT;
-    DECLARE @id_socio INT;
+    DECLARE @correo_socio VARCHAR(255);
 
-    SELECT @actividad_precio = precio FROM Actividad WHERE id = (SELECT id_actividad FROM inserted);
-    SELECT @id_socio = id_socio FROM inserted;
+    SELECT @actividad_precio = Precio 
+    FROM [dbo].[Actividad] 
+    WHERE Id = (SELECT Id_Actividad FROM inserted);
 
-    IF (SELECT Saldo FROM Socio WHERE id = @id_socio) < @actividad_precio
+    SELECT @correo_socio = Correo_Socio FROM inserted;
+
+    IF (SELECT Saldo FROM [dbo].[Socio] WHERE Correo_electronico = @correo_socio) < @actividad_precio
     BEGIN
         RAISERROR('Saldo insuficiente para realizar la reserva', 16, 1);
         ROLLBACK TRANSACTION;
     END
 END;
 
--- Trigger para actualizar el saldo del socio después de insertar una reserva
 GO
 CREATE TRIGGER after_insert_reserva
-ON Reserva
-FOR INSERT
+ON [dbo].[Reserva]
+AFTER INSERT
 AS
 BEGIN
     DECLARE @actividad_precio FLOAT;
-    DECLARE @id_socio INT;
+    DECLARE @correo_socio VARCHAR(255);
 
-    SELECT @actividad_precio = precio FROM Actividad WHERE id = (SELECT id_actividad FROM inserted);
-    SELECT @id_socio = id_socio FROM inserted;
+    SELECT @actividad_precio = Precio 
+    FROM [dbo].[Actividad] 
+    WHERE Id = (SELECT Id_Actividad FROM inserted);
 
-    UPDATE Socio
+    SELECT @correo_socio = Correo_Socio FROM inserted;
+
+    UPDATE [dbo].[Socio]
     SET Saldo = Saldo - @actividad_precio
-    WHERE id = @id_socio;
+    WHERE Correo_electronico = @correo_socio;
 END;
 
--- Trigger para devolver el saldo si se cancela una reserva
 GO
 CREATE TRIGGER after_delete_reserva
-ON Reserva
-FOR DELETE
+ON [dbo].[Reserva]
+AFTER DELETE
 AS
 BEGIN
     DECLARE @actividad_precio FLOAT;
-    DECLARE @id_socio INT;
+    DECLARE @correo_socio VARCHAR(255);
 
-    SELECT @actividad_precio = precio FROM Actividad WHERE id = (SELECT id_actividad FROM deleted);
-    SELECT @id_socio = id_socio FROM deleted;
+    SELECT @actividad_precio = Precio 
+    FROM [dbo].[Actividad] 
+    WHERE Id = (SELECT Id_Actividad FROM deleted);
 
-    UPDATE Socio
+    SELECT @correo_socio = Correo_Socio FROM deleted;
+
+    UPDATE [dbo].[Socio]
     SET Saldo = Saldo + @actividad_precio
-    WHERE id = @id_socio;
+    WHERE Correo_electronico = @correo_socio;
 END;
+

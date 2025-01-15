@@ -13,7 +13,7 @@
                     <li>Taquilla</li>
                     <li>Clases dirigidas (pago extra)</li>
                 </ul>
-                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-4">Comprar</button>
+                <a href="Registro.aspx" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-4">Inscríbete</a>
             </div>
 
             <!-- Card Standard -->
@@ -25,7 +25,7 @@
                         <li>Taquilla</li>
                         <li>Clases dirigidas (pago extra)</li>
                    </ul>
-                   <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-4">Comprar</button>
+                   <a href="Registro.aspx" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-4">Inscríbete</a>
             </div>
 
             <!-- Card Jubilados -->
@@ -37,7 +37,7 @@
                         <li>Taquilla</li>
                         <li>Clases dirigidas (pago extra)</li>
                      </ul>
-                     <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-4">Comprar</button>
+                     <a href="Registro.aspx" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-4">Inscríbete</a>
             </div>
     </div>
 </div>

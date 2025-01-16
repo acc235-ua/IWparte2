@@ -11,7 +11,7 @@ namespace gimnasio
 {
 
 
-    public partial class VerUsuarios
+    public partial class Actividades
     {
     }
 }

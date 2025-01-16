@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -38,7 +39,7 @@ namespace gimnasio
             }
 
             // Conexión a la base de datos
-            string connectionString = "Data Source=TU_SERVIDOR;Initial Catalog=TU_BD;Integrated Security=True";
+            string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ToString();
 
             try
             {

@@ -23,7 +23,7 @@
                     <p class="mt-2 text-base md:text-lg font-medium">Descuento especial para estudiantes. ¡Inscríbete ya!</p>
             </div>
             <div class="carousel-slide w-full">
-                <img src="viejo.jpg" alt="Oferta Jubilados" class="w-full rounded-lg">
+                <img src="anciano.jpg" alt="Oferta Jubilados" class="w-full rounded-lg">
                 <p class="mt-2 text-base md:text-lg font-medium">Oferta especial para jubilados. ¡No te lo pierdas!</p>
             </div>
         </div>

@@ -22,8 +22,9 @@ namespace gimnasio
 
         private void MostrarSaldo()
         {
-            string correoUsuario = Session["Correo_electronico"]?.ToString();
-            
+            string correoUsuario = Session["CorreoUsuario"] as string;
+
+
             string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

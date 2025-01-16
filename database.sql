@@ -99,28 +99,6 @@ CREATE INDEX idx_reserva_fecha ON [dbo].[Reserva] (Fecha_Alta);
 
 -- Crear triggers después de las tablas
 GO
-CREATE TRIGGER before_insert_reserva
-ON [dbo].[Reserva]
-INSTEAD OF INSERT
-AS
-BEGIN
-    DECLARE @actividad_precio FLOAT;
-    DECLARE @correo_socio VARCHAR(255);
-
-    SELECT @actividad_precio = Precio 
-    FROM [dbo].[Actividad] 
-    WHERE Id = (SELECT Id_Actividad FROM inserted);
-
-    SELECT @correo_socio = Correo_Socio FROM inserted;
-
-    IF (SELECT Saldo FROM [dbo].[Socio] WHERE Correo_electronico = @correo_socio) < @actividad_precio
-    BEGIN
-        RAISERROR('Saldo insuficiente para realizar la reserva', 16, 1);
-        ROLLBACK TRANSACTION;
-    END
-END;
-
-GO
 CREATE TRIGGER after_insert_reserva
 ON [dbo].[Reserva]
 AFTER INSERT

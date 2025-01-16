@@ -39,7 +39,7 @@
             <ItemTemplate>
                 <asp:Button ID="btnInscribir" runat="server" CommandName="Inscribir" 
                     CommandArgument='<%# Eval("IdActividad") + "|" + Eval("CorreoMonitor") + "|" + Eval("Fecha", "{0:yyyy-MM-dd}") %>' 
-                    Text="Borrar" CssClass="btn btn-danger" OnClientClick="return confirm('¿Estás seguro de que deseas inscribirte a esta actividad?');" />
+                    Text="Inscribirse" CssClass="btn btn-danger" OnClientClick="return confirm('¿Estás seguro de que deseas inscribirte a esta actividad?');" />
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>

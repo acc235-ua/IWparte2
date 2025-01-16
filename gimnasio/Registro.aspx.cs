@@ -112,22 +112,26 @@ namespace gimnasio
             ENSocio socio;
 
             usuario = new ENUsuario(nombreUsuario, apellidosUsuario, dni, false, correo, contrasena.Text);
-            socio = new ENSocio(correo, 0, "pendiente");
+            socio = new ENSocio(correo, 0, "pendiente", membresiaId);
             
             if(usuario.createUsuario() == false)
-            {
+            {   
                 errorContrasena.Text = "No se ha podido crear el usuario";
             }
             else
             {
-                if(Request.QueryString["desde"] == "admin")
+                if(socio.createSocio() == true)
                 {
-                    Response.Redirect("VerActividades.aspx");
+                    if (Request.QueryString["desde"] == "admin")
+                    {
+                        Response.Redirect("VerActividades.aspx");
+                    }
+                    else
+                    {
+                        Response.Redirect("Actividades.aspx");
+                    }
                 }
-                else
-                {
-                    Response.Redirect("Actividades.aspx");
-                }
+           
                 
             }
         }

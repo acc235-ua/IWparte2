@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace gimnasio
 {
@@ -13,7 +9,6 @@ namespace gimnasio
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -47,30 +42,40 @@ namespace gimnasio
                 {
                     connection.Open();
 
-                    // Consultar el usuario en la base de datos
-                    string query = "SELECT Contrasena FROM Usuario WHERE Correo_electronico = @Correo";
+                    // Consultar el usuario y si es administrador
+                    string query = "SELECT Contrasena, Es_admin FROM Usuario WHERE Correo_electronico = @Correo";
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@Correo", correo);
-                        var result = cmd.ExecuteScalar();
-
-                        if (result != null)
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            // Comprobar si la contraseña coincide
-                            string contrasenaEnDb = result.ToString();
-                            if (contrasenaUsuario == contrasenaEnDb)
+                            if (reader.Read())
                             {
-                                // Redirigir al usuario a otra página si las credenciales son correctas
-                                Response.Redirect("Actividades.aspx");
+                                string contrasenaEnDb = reader["Contrasena"].ToString();
+                                bool esAdmin = Convert.ToBoolean(reader["Es_admin"]);
+
+                                // Comprobar si la contraseña coincide
+                                if (contrasenaUsuario == contrasenaEnDb)
+                                {
+                                    // Redirigir según el rol
+                                    if (esAdmin)
+                                    {
+                                        Response.Redirect("VerActividades.aspx");
+                                    }
+                                    else
+                                    {
+                                        Response.Redirect("Actividades.aspx");
+                                    }
+                                }
+                                else
+                                {
+                                    errorContrasena.Text = "La contraseña es incorrecta.";
+                                }
                             }
                             else
                             {
-                                errorContrasena.Text = "La contraseña es incorrecta.";
+                                errorCorreo.Text = "El correo electrónico no está registrado.";
                             }
-                        }
-                        else
-                        {
-                            errorCorreo.Text = "El correo electrónico no está registrado.";
                         }
                     }
                 }

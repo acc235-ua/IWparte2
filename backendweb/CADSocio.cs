@@ -29,7 +29,7 @@ namespace backEndWeb
             conec.Open();
             try
             {
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Socio] (Correo_electronico,Saldo,Estado,MembresiaId) + values(@correo,@Saldo,@Estado,@MembresiaId", conec);
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Socio] (Correo_electronico,Saldo,Estado,MembresiaId) values(@correo,@Saldo,@Estado,@MembresiaId)", conec);
                 consulta.Parameters.AddWithValue("@correo", socio.correoSocio);
                 consulta.Parameters.AddWithValue("@Saldo", socio.Saldo);
                 consulta.Parameters.AddWithValue("@Estado", socio.Estado);

@@ -51,13 +51,15 @@ namespace backEndWeb
             correoSocio = "";
             Saldo = 0;
             Estado = "";
+            MembresiaId = 3;
         }
 
-        public ENSocio(string co, float Saldo, string Estado)
+        public ENSocio(string co, float Saldo, string Estado, int MembresiaId)
         {
-            this.correoSocio = co;
+            this.correo = co;
             this.Saldo = Saldo;
             this.Estado = Estado;
+            this.MembresiaId = MembresiaId;
         }
 
         public ENSocio(ENSocio socio)
@@ -65,13 +67,14 @@ namespace backEndWeb
             this.correoSocio = socio.correoSocio;
             this.Saldo = socio.Saldo;
             this.Estado = socio.Estado;
+            this.MembresiaId = socio.MembresiaId;
         }
 
 
         public bool createSocio()
         {
             CADSocio aux = new CADSocio();
-            if (aux.readSocio(this))
+            if (!aux.readSocio(this))
             {
                 return aux.createSocio(this);
             }
@@ -84,7 +87,7 @@ namespace backEndWeb
         public bool getSocio()
         {
             CADSocio aux = new CADSocio();
-            if (aux.readSocio(this))
+            if (!aux.readSocio(this))
             {
                 return aux.readSocio(this);
             }

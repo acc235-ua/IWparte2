@@ -46,11 +46,11 @@ namespace backEndWeb
                     "values (@correo,@apellidos,@dni,@esAdmin,@contrasena,@nombre)", conec);
 
                 //consulta.Parameters.Add("@id", SqlDbType.Int).Value = user.idUser;
-                consulta.Parameters.Add("@apellidos", SqlDbType.Text).Value = user.apellidosUser;
-                consulta.Parameters.Add("@dni", SqlDbType.Text).Value = user.dniUser;
+                consulta.Parameters.Add("@apellidos", SqlDbType.VarChar).Value = user.apellidosUser;
+                consulta.Parameters.Add("@dni", SqlDbType.VarChar).Value = user.dniUser;
                 consulta.Parameters.Add("@esAdmin", SqlDbType.Bit).Value = user.esAdminUser;
-                consulta.Parameters.Add("@correo", SqlDbType.Text).Value = user.correoUser;
-                consulta.Parameters.Add("@contrasena", SqlDbType.Text).Value = user.contrasenaUser;
+                consulta.Parameters.Add("@correo", SqlDbType.VarChar).Value = user.correoUser;
+                consulta.Parameters.Add("@contrasena", SqlDbType.VarChar).Value = user.contrasenaUser;
 
                 consulta.ExecuteNonQuery();
 
@@ -75,21 +75,18 @@ namespace backEndWeb
             try
             {
                 conec.Open();
-                SqlDataAdapter consulta = new SqlDataAdapter("SELECT * FROM [dbo].[Usuario] WHERE  Correo_electronico=" + user.correoUser, conec);
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Usuario] WHERE  Correo_electronico= @correo", conec);
 
-                DataSet tablaDatos = new DataSet();
-                consulta.Fill(tablaDatos);
-
-                if (tablaDatos.Tables[0].Rows.Count > 0)
+                consulta.Parameters.Add("@correo", SqlDbType.VarChar).Value = user.correoUser;
+                SqlDataReader reader = consulta.ExecuteReader();
+                if (reader.Read())
                 {
-                    // user.nombreUser = tablaDatos.Tables[0].Rows[0]["nombre"].ToString();
-                    user.apellidosUser = tablaDatos.Tables[0].Rows[0]["Apellidos"].ToString();
-                    user.dniUser = tablaDatos.Tables[0].Rows[0]["DNI"].ToString();
-                    user.esAdminUser = Convert.ToBoolean(tablaDatos.Tables[0].Rows[0]["Es_admin"]);
-                    //  user.correoUser = tablaDatos.Tables[0].Rows[0]["Correo_electronico"].ToString();
-                    user.contrasenaUser = tablaDatos.Tables[0].Rows[0]["Contrasena"].ToString();
-                    user.nombreUser = tablaDatos.Tables[0].Rows[0]["nombre"].ToString();
-
+                    user.correoUser = reader["Correo_electronico"].ToString();
+                    user.apellidosUser = reader["Apellidos"].ToString();
+                    user.dniUser = reader["DNI"].ToString();
+                    user.esAdminUser = bool.Parse(reader["Es_admin"].ToString());
+                    user.contrasenaUser = reader["Contrasena"].ToString();
+                    user.nombreUser = reader["nombre"].ToString();
                 }
                 else
                 {
@@ -105,6 +102,7 @@ namespace backEndWeb
             finally { conec.Close(); }
             return respuesta;
         }
+
 
 
         public string deleteUsuario(ENUsuario user)

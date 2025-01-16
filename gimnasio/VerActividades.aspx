@@ -91,8 +91,8 @@
            <asp:GridView ID="gvActividadesImpartidas" runat="server" CssClass="table-auto w-full border-collapse border border-gray-300 mt-4" AutoGenerateColumns="False" OnRowCommand="gvActividadesImpartidas_RowCommand">
     <Columns>
         <asp:BoundField DataField="IdActividad" HeaderText="ID Actividad" />
-        <asp:BoundField DataField="NombreActividad" HeaderText="Nombre Actividad" />
         <asp:BoundField DataField="CorreoMonitor" HeaderText="Correo Monitor" />
+        <asp:BoundField DataField="NombreActividad" HeaderText="Nombre Actividad" />
         <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:yyyy-MM-dd}" />
         <asp:TemplateField HeaderText="Acciones">
             <ItemTemplate>

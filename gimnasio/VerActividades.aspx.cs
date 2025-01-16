@@ -36,17 +36,18 @@ namespace gimnasio
                 gvActividadesImpartidas.DataSource = actividadesImpartidas.Select(ai => new
                 {
                     IdActividad = ai.Item1,
-                    NombreActividad = ai.Item2,
-                    CorreoMonitor = ai.Item3,
+                    CorreoMonitor = ai.Item2,
+                    NombreActividad = ai.Item3,
                     Fecha = ai.Item4.ToString("yyyy-MM-dd")
                 }).ToList();
-                gvActividadesImpartidas.DataBind();
+                gvActividadesImpartidas.DataBind();  // Esto asegura que se actualice el DataSource
             }
             else
             {
                 lblMensaje.Text = "No hay actividades impartidas disponibles.";
             }
         }
+
 
 
         private void CargarActividades()
@@ -135,33 +136,35 @@ namespace gimnasio
 
             // Mostrar mensaje de éxito o redirigir a otra página
             Response.Write("<script>alert('Actividad registrada con éxito.');</script>");
+            // Actualizar el listado de actividades
+            MostrarActividadesImpartidas();
         }
 
         protected void gvActividadesImpartidas_RowCommand(object sender, GridViewCommandEventArgs e)
+{
+    if (e.CommandArgument != null)
+    {
+        // Dividir el argumento para obtener los valores de la clave primaria
+        string[] argumentos = e.CommandArgument.ToString().Split('|');
+        int idActividad = int.Parse(argumentos[0]);
+        string correoMonitor = argumentos[1];  // Ahora obtenemos el correo del monitor
+        DateTime fecha = DateTime.Parse(argumentos[2]);
+
+        if (e.CommandName == "Editar")
         {
-            if (e.CommandArgument != null)
-            {
-                // Dividir el argumento para obtener los valores de la clave primaria
-                string[] argumentos = e.CommandArgument.ToString().Split('|');
-                int idActividad = int.Parse(argumentos[0]);
-                string correoMonitor = argumentos[1];  // Ahora obtenemos el correo del monitor
-                DateTime fecha = DateTime.Parse(argumentos[2]);
-
-                if (e.CommandName == "Editar")
-                {
-                    // Cargar datos en el formulario para edición
-                    CargarDatosActividad(idActividad, correoMonitor, fecha);
-                }
-                else if (e.CommandName == "Borrar")
-                {
-                    // Eliminar actividad
-                    BorrarActividad(idActividad, correoMonitor, fecha);
-
-                    // Refrescar listado
-                    MostrarActividadesImpartidas();
-                }
-            }
+            // Cargar datos en el formulario para edición
+            CargarDatosActividad(idActividad, correoMonitor, fecha);
         }
+        else if (e.CommandName == "Borrar")
+        {
+            // Eliminar actividad
+            BorrarActividad(idActividad, correoMonitor, fecha);
+
+            // Refrescar listado
+            MostrarActividadesImpartidas();
+        }
+    }
+}
 
 
 
@@ -180,9 +183,8 @@ namespace gimnasio
                 // Llenar el formulario con los datos obtenidos
                 ddlIdActividad.SelectedValue = actividad.idActividad.ToString();
                 ddlCorreoMonitor.SelectedValue = actividad.correo_monitorActividad;  // Rellenar el combo con el correo del monitor
-                txtFecha.Text = actividad.fechaActividad.ToString("yyyy-MM-dd");
-                txtHoraInicio.Text = actividad.horaInicioActividad.ToString("HH:mm");
-                txtHoraFin.Text = actividad.horaFinActividad.ToString("HH:mm");
+                txtHoraInicio.Text = actividad.horaInicioActividad.ToString(@"hh\:mm"); // Para TimeSpan
+                txtHoraFin.Text = actividad.horaFinActividad.ToString(@"hh\:mm"); // Para TimeSpan
                 txtHuecos.Text = actividad.huecosActividad.ToString();
                 txtPrecio.Text = actividad.precioActividad.ToString("F2");
 
@@ -208,15 +210,25 @@ namespace gimnasio
                 fechaActividad = fecha
             };
 
-            if (actividad.deleteActividad())
+            if (actividad.deleteActividad()) // Verifica si la eliminación fue exitosa
             {
+                // Mensaje de éxito
                 Response.Write("<script>alert('Actividad eliminada con éxito.');</script>");
+
+                // Limpiar el DataSource y recargar el GridView
+                gvActividadesImpartidas.DataSource = null;
+                gvActividadesImpartidas.DataBind(); // Esto asegura que el GridView se refresque
+
+                // Llamar a MostrarActividadesImpartidas para obtener los datos actualizados
+                MostrarActividadesImpartidas();
             }
             else
             {
+                // Si ocurre un error al eliminar
                 Response.Write("<script>alert('Error al eliminar la actividad.');</script>");
             }
         }
+
 
 
 

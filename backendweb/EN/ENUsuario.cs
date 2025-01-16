@@ -178,5 +178,13 @@ namespace backEndWeb
 
 
         }
-    }
+
+
+        public bool CompruebaAdmin()
+        {
+            CADUsuario aux = new CADUsuario();
+            return aux.CompruebaAdmin(this);
+            
+ 
+        }
 }

@@ -86,7 +86,7 @@ namespace backEndWeb
                     user.apellidosUser = tablaDatos.Tables[0].Rows[0]["Apellidos"].ToString();
                     user.dniUser = tablaDatos.Tables[0].Rows[0]["DNI"].ToString();
                     user.esAdminUser = Convert.ToBoolean(tablaDatos.Tables[0].Rows[0]["Es_admin"]);
-                  //  user.correoUser = tablaDatos.Tables[0].Rows[0]["Correo_electronico"].ToString();
+                    //  user.correoUser = tablaDatos.Tables[0].Rows[0]["Correo_electronico"].ToString();
                     user.contrasenaUser = tablaDatos.Tables[0].Rows[0]["Contrasena"].ToString();
                     user.nombreUser = tablaDatos.Tables[0].Rows[0]["nombre"].ToString();
 
@@ -171,7 +171,7 @@ namespace backEndWeb
 
         }
 
-        public bool listarUsuarios(ref (string , string )[] usuarios )
+        public bool listarUsuarios(ref (string, string)[] usuarios)
         {
             //se itera sobre usuarios esperando un array vacío. Si queréis se puede cambiar
             bool respuesta = false;
@@ -193,9 +193,9 @@ namespace backEndWeb
                     listaTemporal.Add((correo, nombre));
                 }
 
-                
+
                 usuarios = listaTemporal.ToArray();
-                respuesta =true;
+                respuesta = true;
 
             }
             catch (Exception ex)
@@ -208,6 +208,45 @@ namespace backEndWeb
                 conec.Close();
 
             }
+            return respuesta;
+
+        }
+
+
+        public bool CompruebaAdmin(ENUsuario usuario)
+        {
+            bool respuesta = false;
+
+            SqlConnection conec = new SqlConnection(constring);
+            try
+            {
+                conec.Open();
+
+                SqlDataAdapter consulta = new SqlDataAdapter("SELECT Es_Admin FROM [dbo].[Usuario] WHERE Correo_electronico=" + usuario.correoUser, conec);
+
+                DataSet tablaDatos = new DataSet();
+                consulta.Fill(tablaDatos);
+
+                if (tablaDatos.Tables[0].Rows.Count > 0)
+                {
+                    respuesta = Convert.ToBoolean(tablaDatos.Tables[0].Rows[0]["Es_admin"]);
+                }
+                else
+                {
+                    System.Console.WriteLine("No se ha encontrado el usuario");
+                    respuesta = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("Error en CAD esAdmin: ", ex.Message);
+                respuesta = false;
+            }
+            finally
+            {
+                conec.Close();
+            }
+
             return respuesta;
 
         }

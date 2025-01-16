@@ -30,7 +30,7 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dsbo].[Reserva] WHERE Correo_Socio = @correo_socio AND Id_Actividad = @id_actividad AND Id_Monitor= @id_monitor AND Fecha_Actividad = @fecha_Actividad ", conec);
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Reserva] WHERE Correo_Socio = @correo_socio AND Id_Actividad = @id_actividad AND Correo_Monitor= @correo_monitor AND Fecha_Actividad = @fecha_Actividad ", conec);
                 consulta.Parameters.Add("@correo_socio", SqlDbType.VarChar).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = reserva.idActividad;
                 consulta.Parameters.Add("@correo_monitor", SqlDbType.VarChar).Value = reserva.CorreoSocioActividad;
@@ -71,10 +71,10 @@ namespace backendweb.CAD
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Reserva] (Correo_Socio, Id_Actividad,Correo_Monitor, Fecha_Actividad, Fecha_Alta, Activa) VALUES (@correo_socio, @id_actividad, @correo_monitor, @fecha_actividad, @fecha_alta, @activa)", conec);
+                SqlCommand consulta = new SqlCommand("INSERT INTO [dbo].[Reserva] (Correo_Socio, Id_Actividad, Correo_Monitor, Fecha_Actividad, Fecha_Alta, Activa) VALUES (@correo_socio, @id_actividad, @correo_monitor, @fecha_actividad, @fecha_alta, @activa)", conec);
                 consulta.Parameters.Add("@correo_socio", SqlDbType.VarChar).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = reserva.idActividad;
-                consulta.Parameters.Add("@correo_monitor", SqlDbType.Int).Value = reserva.CorreoMonitorActividad;
+                consulta.Parameters.Add("@correo_monitor", SqlDbType.VarChar).Value = reserva.CorreoMonitorActividad;
                 consulta.Parameters.Add("@fecha_actividad", SqlDbType.DateTime).Value = reserva.fechaActividad;
                 consulta.Parameters.Add("@fecha_alta", SqlDbType.DateTime).Value = reserva.fechaAltaReserva;
                 consulta.Parameters.Add("@activa", SqlDbType.Bit).Value = reserva.activaReserva;
@@ -102,7 +102,7 @@ namespace backendweb.CAD
             {
                 conec.Open();
                 SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Reserva] SET Activa = @activa, Fecha_Alta = @fecha_alta WHERE Correo_Socio = @correo_socio AND Id_Actividad = @id_actividad AND Correo_Monitor = @correo_monitor AND Fecha_Actividad = @fecha_actividad", conec);
-                consulta.Parameters.Add("@correo_monitor", SqlDbType.Int).Value = reserva.CorreoMonitorActividad;
+                consulta.Parameters.Add("@correo_monitor", SqlDbType.VarChar).Value = reserva.CorreoMonitorActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = reserva.idActividad;
                 consulta.Parameters.Add("@correo_socio", SqlDbType.Int).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@fecha_actividad", SqlDbType.DateTime).Value = reserva.fechaActividad;
@@ -132,7 +132,7 @@ namespace backendweb.CAD
             {
                 conec.Open();
                 SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Reserva] WHERE Correo_socio = @correo_socio AND Id_Actividad = @id_actividad AND Correo_Monitor = @correo_monitor AND Fecha_Actividad = @fecha_actividad", conec);
-                consulta.Parameters.Add("@correo_socio", SqlDbType.Int).Value = reserva.CorreoSocioActividad;
+                consulta.Parameters.Add("@correo_socio", SqlDbType.VarChar).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@id_actividad", SqlDbType.Int).Value = reserva.idActividad;
                 consulta.Parameters.Add("@correo_monitor", SqlDbType.Int).Value = reserva.CorreoMonitorActividad;
                 consulta.Parameters.Add("@fecha_actividad", SqlDbType.DateTime).Value = reserva.fechaActividad;

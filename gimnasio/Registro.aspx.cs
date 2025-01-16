@@ -128,6 +128,10 @@ namespace gimnasio
                     }
                     else
                     {
+                        Session["Email"] = correo;
+                        Session["Saldo"] = 100;
+                        Session["Estado"] = "Activo";
+                        Session["Membresia"] = membresiaId;
                         Response.Redirect("Actividades.aspx");
                     }
                 }

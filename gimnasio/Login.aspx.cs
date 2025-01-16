@@ -64,6 +64,8 @@ namespace gimnasio
                                     }
                                     else
                                     {
+                                        Session["CorreoUsuario"] = correo;
+
                                         Response.Redirect("Actividades.aspx");
                                     }
                                 }

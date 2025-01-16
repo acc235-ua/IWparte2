@@ -115,15 +115,16 @@ namespace backendweb.CAD
         {
             SqlConnection conec = new SqlConnection(constring);
             bool leido = false;
+            SqlDataReader reader = null;
             try
             {
                 conec.Open();
                 SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Actividad] WHERE Id = @id", conec);
                 consulta.Parameters.Add("@id", SqlDbType.Int).Value = actividad.idActividad;
-                SqlDataReader reader = consulta.ExecuteReader();
+                reader = consulta.ExecuteReader();
+
                 if (reader.Read())
                 {
-                    
                     actividad.idActividad = int.Parse(reader["Id"].ToString());
                     actividad.nombreActividad = reader["Nombre"].ToString();
                     actividad.descripcionActividad = reader["Descripcion"].ToString();
@@ -139,10 +140,15 @@ namespace backendweb.CAD
             }
             finally
             {
+                // Asegurarse de cerrar el DataReader si no es null
+                if (reader != null)
+                {
+                    reader.Close();
+                }
                 conec.Close();
             }
             return leido;
         }
+
     }
 }
-//nombre apellidos

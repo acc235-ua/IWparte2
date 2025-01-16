@@ -129,29 +129,41 @@ namespace backEndWeb
         public bool readMembresia(ENMembresia membresia)
         {
             bool respuesta = false;
-
             SqlConnection conec = new SqlConnection(constring);
+            SqlDataReader reader = null;
+
             try
             {
                 conec.Open();
                 SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Membresia] WHERE Id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", membresia.id);
-                SqlDataReader reader = consulta.ExecuteReader();
-                reader.Read();
-                membresia.id = int.Parse(reader["Id"].ToString());
-                membresia.Descripcion = reader["Descripcion"].ToString();
-                membresia.Tipo = reader["Tipo"].ToString();
-                membresia.Precio = float.Parse(reader["Precio"].ToString());
-                respuesta = true;
+                reader = consulta.ExecuteReader();
+                if (reader.Read())
+                {
+                    membresia.id = int.Parse(reader["Id"].ToString());
+                    membresia.Descripcion = reader["Descripcion"].ToString();
+                    membresia.Tipo = reader["Tipo"].ToString();
+                    membresia.Precio = float.Parse(reader["Precio"].ToString());
+                    respuesta = true;
+                }
             }
             catch (SqlException ex)
             {
                 respuesta = false;
-                Console.WriteLine("Error", ex.Message);
+                Console.WriteLine("Error: " + ex.Message);
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close(); // Cierra el SqlDataReader
+                }
+                conec.Close(); // Cierra la conexión
             }
 
             return respuesta;
         }
+
 
 
 

@@ -36,18 +36,19 @@ namespace backendweb.CAD
                 consulta.Parameters.Add("@correo_monitor", SqlDbType.VarChar).Value = reserva.CorreoSocioActividad;
                 consulta.Parameters.Add("@fecha_actividad", SqlDbType.DateTime).Value = reserva.fechaActividad;
 
-
-                SqlDataReader reader = consulta.ExecuteReader();
-                if (reader.Read())
+                // Using statement ensures proper disposal of the SqlDataReader
+                using (SqlDataReader reader = consulta.ExecuteReader())
                 {
-                    reserva.CorreoMonitorActividad = reader["Correo_Actividad"].ToString();
-                    reserva.idActividad = int.Parse(reader["Id_Actividad"].ToString());
-                    reserva.CorreoSocioActividad = reader["Correo_Monitor"].ToString();
-                    reserva.fechaActividad = DateTime.Parse(reader["Fecha_Actividad"].ToString());
-                    reserva.fechaAltaReserva = DateTime.Parse(reader["Fecha_Alta"].ToString());
-                    reserva.activaReserva = bool.Parse(reader["Activa"].ToString());
-                    leido = true;
-
+                    if (reader.Read())
+                    {
+                        reserva.CorreoMonitorActividad = reader["Correo_Actividad"].ToString();
+                        reserva.idActividad = int.Parse(reader["Id_Actividad"].ToString());
+                        reserva.CorreoSocioActividad = reader["Correo_Monitor"].ToString();
+                        reserva.fechaActividad = DateTime.Parse(reader["Fecha_Actividad"].ToString());
+                        reserva.fechaAltaReserva = DateTime.Parse(reader["Fecha_Alta"].ToString());
+                        reserva.activaReserva = bool.Parse(reader["Activa"].ToString());
+                        leido = true;
+                    }
                 }
             }
             catch (SqlException ex)
@@ -61,6 +62,7 @@ namespace backendweb.CAD
             }
             return leido;
         }
+
 
         public bool createReserva(ENReserva reserva)
         {

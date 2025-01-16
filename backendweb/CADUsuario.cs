@@ -77,33 +77,39 @@ namespace backEndWeb
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Usuario] WHERE  Correo_electronico= @correo", conec);
-
+                SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Usuario] WHERE Correo_electronico= @correo", conec);
                 consulta.Parameters.Add("@correo", SqlDbType.VarChar).Value = user.correoUser;
-                SqlDataReader reader = consulta.ExecuteReader();
-                if (reader.Read())
-                {
-                    user.correoUser = reader["Correo_electronico"].ToString();
-                    user.apellidosUser = reader["Apellidos"].ToString();
-                    user.dniUser = reader["DNI"].ToString();
-                    user.esAdminUser = bool.Parse(reader["Es_admin"].ToString());
-                    user.contrasenaUser = reader["Contrasena"].ToString();
-                    user.nombreUser = reader["nombre"].ToString();
-                }
-                else
-                {
-                    respuesta = "EMPTY";
-                }
 
+                // Usamos 'using' para que SqlDataReader se cierre automáticamente.
+                using (SqlDataReader reader = consulta.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        user.correoUser = reader["Correo_electronico"].ToString();
+                        user.apellidosUser = reader["Apellidos"].ToString();
+                        user.dniUser = reader["DNI"].ToString();
+                        user.esAdminUser = bool.Parse(reader["Es_admin"].ToString());
+                        user.contrasenaUser = reader["Contrasena"].ToString();
+                        user.nombreUser = reader["nombre"].ToString();
+                    }
+                    else
+                    {
+                        respuesta = "EMPTY";
+                    }
+                }
             }
             catch (Exception ex)
             {
                 respuesta = ex.Message;
                 Console.Write("Error en CAD leyendo usuario:", respuesta);
             }
-            finally { conec.Close(); }
+            finally
+            {
+                conec.Close(); // Cierra la conexión
+            }
             return respuesta;
         }
+
 
 
 
@@ -173,7 +179,6 @@ namespace backEndWeb
 
         public bool listarUsuarios(ref (string, string)[] usuarios)
         {
-            //se itera sobre usuarios esperando un array vacío. Si queréis se puede cambiar
             bool respuesta = false;
 
             SqlConnection conec = new SqlConnection(constring);
@@ -181,22 +186,21 @@ namespace backEndWeb
             {
                 conec.Open();
 
-                SqlDataAdapter consulta = new SqlDataAdapter("SELECT Correo_electronico,nombre FROM [dbo].[Usuario]", conec);
-                SqlDataReader leerDatos = consulta.SelectCommand.ExecuteReader();
-
-                List<(string, string)> listaTemporal = new List<(string, string)>();
-
-                while (leerDatos.Read())
+                // Usamos 'using' para asegurar que el SqlDataReader se cierre correctamente.
+                using (SqlDataReader leerDatos = new SqlCommand("SELECT Correo_electronico, nombre FROM [dbo].[Usuario]", conec).ExecuteReader())
                 {
-                    string correo = leerDatos["Correo_electronico"].ToString();
-                    string nombre = leerDatos["nombre"].ToString();
-                    listaTemporal.Add((correo, nombre));
+                    List<(string, string)> listaTemporal = new List<(string, string)>();
+
+                    while (leerDatos.Read())
+                    {
+                        string correo = leerDatos["Correo_electronico"].ToString();
+                        string nombre = leerDatos["nombre"].ToString();
+                        listaTemporal.Add((correo, nombre));
+                    }
+
+                    usuarios = listaTemporal.ToArray();
+                    respuesta = true;
                 }
-
-
-                usuarios = listaTemporal.ToArray();
-                respuesta = true;
-
             }
             catch (Exception ex)
             {
@@ -205,12 +209,11 @@ namespace backEndWeb
             }
             finally
             {
-                conec.Close();
-
+                conec.Close(); // Cierra la conexión
             }
             return respuesta;
-
         }
+
 
 
         public bool CompruebaAdmin(ENUsuario usuario)

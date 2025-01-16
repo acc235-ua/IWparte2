@@ -106,26 +106,28 @@ namespace backEndWeb
         {
             List<ENMonitor> monitores = new List<ENMonitor>();
             SqlConnection conec = new SqlConnection(constring);
+            SqlDataReader reader = null;
+
             conec.Open();
             try
             {
                 string query = @"
-                SELECT 
-                    u.Correo_electronico, 
-                    u.Nombre, 
-                    u.Apellidos, 
-                    u.DNI, 
-                    u.Correo_electronico, 
-                    m.especialidad,
-                    m.salario
-                    m.telefono
-                FROM 
-                    Usuario u
-                INNER JOIN 
-                    Monitor m ON u.Correo_electronico = m.Correo_electronico";
+        SELECT 
+            u.Correo_electronico, 
+            u.Nombre, 
+            u.Apellidos, 
+            u.DNI, 
+            u.Correo_electronico, 
+            m.especialidad,
+            m.salario,
+            m.telefono
+        FROM 
+            Usuario u
+        INNER JOIN 
+            Monitor m ON u.Correo_electronico = m.Correo_electronico";
 
                 SqlCommand consulta = new SqlCommand(query, conec);
-                SqlDataReader reader = consulta.ExecuteReader();
+                reader = consulta.ExecuteReader();
                 while (reader.Read())
                 {
                     ENMonitor monitor = new ENMonitor();
@@ -146,6 +148,10 @@ namespace backEndWeb
             }
             finally
             {
+                if (reader != null)
+                {
+                    reader.Close(); // Asegura que el DataReader se cierre
+                }
                 conec.Close();
             }
             return monitores;
@@ -155,12 +161,14 @@ namespace backEndWeb
         {
             bool respuesta = false;
             SqlConnection conec = new SqlConnection(constring);
+            SqlDataReader reader = null;
+
             conec.Open();
             try
             {
                 SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Monitor] WHERE Correo_electronico = @correo", conec);
                 consulta.Parameters.AddWithValue("@correo", monitor.correo);
-                SqlDataReader reader = consulta.ExecuteReader();
+                reader = consulta.ExecuteReader();
                 if (reader.Read())
                 {
                     monitor.correo = reader.GetString(0);
@@ -176,6 +184,10 @@ namespace backEndWeb
             }
             finally
             {
+                if (reader != null)
+                {
+                    reader.Close(); // Asegura que el DataReader se cierre
+                }
                 conec.Close();
             }
             return respuesta;

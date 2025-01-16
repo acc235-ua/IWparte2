@@ -37,7 +37,7 @@ namespace gimnasio
                 {
                     IdActividad = ai.Item1,
                     NombreActividad = ai.Item2,
-                    CorreMonitor = ai.Item3,
+                    CorreoMonitor = ai.Item3,
                     Fecha = ai.Item4.ToString("yyyy-MM-dd")
                 }).ToList();
                 gvActividadesImpartidas.DataBind();
@@ -60,10 +60,17 @@ namespace gimnasio
                 {
                     connection.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
-                    ddlIdActividad.DataSource = reader;
-                    ddlIdActividad.DataTextField = "Nombre";
-                    ddlIdActividad.DataValueField = "Id";
-                    ddlIdActividad.DataBind();
+                    try
+                    {
+                        ddlIdActividad.DataSource = reader;
+                        ddlIdActividad.DataTextField = "Nombre";
+                        ddlIdActividad.DataValueField = "Id";
+                        ddlIdActividad.DataBind();
+                    }
+                    finally
+                    {
+                        reader.Close(); // Cierra el DataReader después de usarlo
+                    }
                 }
             }
         }
@@ -79,13 +86,21 @@ namespace gimnasio
                 {
                     connection.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
-                    ddlCorreoMonitor.DataSource = reader;
-                    ddlCorreoMonitor.DataTextField = "Correo_electronico";
-                    ddlCorreoMonitor.DataValueField = "Correo_electronico";
-                    ddlCorreoMonitor.DataBind();
+                    try
+                    {
+                        ddlCorreoMonitor.DataSource = reader;
+                        ddlCorreoMonitor.DataTextField = "Correo_electronico";
+                        ddlCorreoMonitor.DataValueField = "Correo_electronico";
+                        ddlCorreoMonitor.DataBind();
+                    }
+                    finally
+                    {
+                        reader.Close(); // Cierra el DataReader después de usarlo
+                    }
                 }
             }
         }
+
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
@@ -150,6 +165,7 @@ namespace gimnasio
 
 
 
+
         private void CargarDatosActividad(int idActividad, string correoMonitor, DateTime fecha)
         {
             ENActividad_Impartida actividad = new ENActividad_Impartida
@@ -159,9 +175,9 @@ namespace gimnasio
                 fechaActividad = fecha
             };
 
-            if (actividad.readActividad())
+            if (actividad.readActividad())  // Se obtiene la actividad correctamente
             {
-                // Llenar el formulario con los datos
+                // Llenar el formulario con los datos obtenidos
                 ddlIdActividad.SelectedValue = actividad.idActividad.ToString();
                 ddlCorreoMonitor.SelectedValue = actividad.correo_monitorActividad;  // Rellenar el combo con el correo del monitor
                 txtFecha.Text = actividad.fechaActividad.ToString("yyyy-MM-dd");
@@ -175,7 +191,13 @@ namespace gimnasio
                 hiddenCorreoMonitor.Value = correoMonitor;
                 hiddenFecha.Value = fecha.ToString("yyyy-MM-dd");
             }
+            else
+            {
+                // Si no se encuentra la actividad, puedes mostrar un mensaje o manejar el error
+                lblMensaje.Text = "No se pudo cargar la actividad.";
+            }
         }
+
 
         private void BorrarActividad(int idActividad, string correoMonitor, DateTime fecha)
         {

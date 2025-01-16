@@ -56,7 +56,7 @@ namespace gimnasio
                 return;
             }
 
-            // Validación de tarjeta (puedes implementar más validaciones según sea necesario)
+            // Validación de tarjeta
             if (string.IsNullOrEmpty(txtTarjeta.Text) || txtTarjeta.Text.Length < 16 || string.IsNullOrEmpty(txtCVV.Text))
             {
                 lblRecargaMensaje.Text = "Por favor, introduce datos válidos de la tarjeta.";

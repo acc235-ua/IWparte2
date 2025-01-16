@@ -123,7 +123,9 @@ namespace backEndWeb
             {
                 conec.Open();
 
-                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Usuario] WHERE Correo_electronico = " + user.correoUser, conec);
+                SqlCommand consulta = new SqlCommand("DELETE FROM [dbo].[Usuario] WHERE Correo_electronico = @correo", conec);
+                consulta.Parameters.Add("@correo", SqlDbType.VarChar).Value = user.correoUser;
+                consulta.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
@@ -149,7 +151,7 @@ namespace backEndWeb
 
                 SqlCommand consulta = new SqlCommand("UPDATE [dbo].[Usuario] SET " +
                     "Apellidos=@apellidosuser, DNI= @dniuser, Es_admin=@esadminuser, " +
-                     "Contrasena= @contrasenaUser, nombre= @nombre" +
+                     "Contrasena= @contrasenaUser, nombre= @nombre " +
                     "WHERE Correo_electronico= @correouser", conec);
 
                 //consulta.Parameters.Add("@iduser", SqlDbType.Int).Value = user.idUser;

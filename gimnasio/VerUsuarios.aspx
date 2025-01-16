@@ -30,5 +30,46 @@
         </nav>
     </div>
 </header>
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-semibold text-center mb-6">Gestión de Usuarios</h1>
+        <!-- Formulario para crear y editar usuarios -->
+        <h2 class="text-xl mb-4">Editar Usuario</h2>
+        <asp:Label ID="lblMensaje" runat="server" CssClass="text-red-600"></asp:Label>
+        <form id="formRegistro" runat="server" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+
+        <div class="bg-white p-6 rounded shadow-md">
+            <asp:TextBox ID="txtCorreo" runat="server" CssClass="form-input mb-4" Placeholder="Correo Electrónico" />
+            <asp:TextBox ID="txtNombre" runat="server" CssClass="form-input mb-4" Placeholder="Nombre" />
+            <asp:TextBox ID="txtApellidos" runat="server" CssClass="form-input mb-4" Placeholder="Apellidos" />
+            <asp:TextBox ID="txtDNI" runat="server" CssClass="form-input mb-4" Placeholder="DNI" />
+            <asp:CheckBox ID="chkEsAdmin" runat="server" Text="Admin" class="mb-4" />
+            <asp:TextBox ID="txtContrasena" runat="server" CssClass="form-input mb-4" Placeholder="Contraseña" TextMode="Password" />
+            <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-success" Text="Guardar Usuario" OnClick="btnGuardar_Click" />
+        </div>
+        <br />
+        <asp:Label ID="Mensaje" runat="server" CssClass="text-red-500"></asp:Label>
+
+        <!-- GridView para mostrar los usuarios -->
+        <asp:GridView ID="gvUsuarios" runat="server" CssClass="table-auto w-full border-collapse border border-gray-300 mt-4"
+              AutoGenerateColumns="False" OnRowCommand="gvUsuarios_RowCommand">
+    <Columns>
+        <asp:BoundField DataField="Correo_electronico" HeaderText="Correo Electrónico" />
+        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+        <asp:TemplateField HeaderText="Acciones">
+            <ItemTemplate>
+                <asp:Button ID="btnEditar" runat="server" CommandName="Editar" 
+                            CommandArgument='<%# Eval("Correo_electronico") %>' 
+                            Text="Editar" CssClass="btn btn-primary" />
+                <asp:Button ID="btnBorrar" runat="server" CommandName="Borrar" 
+                            CommandArgument='<%# Eval("Correo_electronico") %>' 
+                            Text="Borrar" CssClass="btn btn-danger"
+                            OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');" />
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+</form>
+
+    </div>
 </body>
 </html>

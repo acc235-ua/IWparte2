@@ -166,9 +166,6 @@ namespace gimnasio
     }
 }
 
-
-
-
         private void CargarDatosActividad(int idActividad, string correoMonitor, DateTime fecha)
         {
             ENActividad_Impartida actividad = new ENActividad_Impartida

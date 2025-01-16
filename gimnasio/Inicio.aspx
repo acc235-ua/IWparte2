@@ -4,8 +4,8 @@
     <!-- Hero Section -->
     <section class="text-center py-8 px-4 w-full">
         <h2 class="text-3xl md:text-4xl font-bold mb-4">El mejor gimnasio para ponerte en forma</h2>
-        <img src="https://via.placeholder.com/800x400?text=Gym+Image" alt="Gimnasio" class="w-full max-w-full md:max-w-4xl mx-auto rounded-lg shadow-lg">
-        <div class="mt-6">
+        <img src="gimprincipal.jpg" alt="Gimnasio" class="w-full max-w-full md:max-w-4xl mx-auto rounded-lg shadow-lg">
+            <div class="mt-6">
             <a href="Registro.aspx" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300">Inscríbete</a>
         </div>
     </section>
@@ -19,7 +19,8 @@
 
             <div class="carousel-slide w-full">
                 <img src="https://via.placeholder.com/700x400?text=Oferta+Estudiantes" alt="Oferta Estudiantes" class="w-full rounded-lg">
-                <p class="mt-2 text-base md:text-lg font-medium">Descuento especial para estudiantes. ¡Inscríbete ya!</p>
+              
+                    <p class="mt-2 text-base md:text-lg font-medium">Descuento especial para estudiantes. ¡Inscríbete ya!</p>
             </div>
             <div class="carousel-slide w-full">
                 <img src="https://via.placeholder.com/700x400?text=Oferta+Jubilados" alt="Oferta Jubilados" class="w-full rounded-lg">

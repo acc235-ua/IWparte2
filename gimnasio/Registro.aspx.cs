@@ -114,27 +114,21 @@ namespace gimnasio
             usuario = new ENUsuario(nombreUsuario, apellidosUsuario, dni, false, correo, contrasena.Text);
             socio = new ENSocio(correo, 0, "pendiente");
             
-            if(usuario.readUsuario() == false)
+            if(usuario.createUsuario() == false)
             {
-                if(usuario.createUsuario() == false)
-                {
-                    errorContrasena.Text = "No se ha podido crear el usuario";
-                }
-                else
-                {
-                    if(Request.QueryString["desde"] == "admin")
-                    {
-                        Response.Redirect("VerActividades.aspx");
-                    }
-                    else
-                    {
-                        Response.Redirect("Actividades.aspx");
-                    }
-                }
+                errorContrasena.Text = "No se ha podido crear el usuario";
             }
             else
             {
-                errorContrasena.Text = "Ese correo ya está en uso";
+                if(Request.QueryString["desde"] == "admin")
+                {
+                    Response.Redirect("VerActividades.aspx");
+                }
+                else
+                {
+                    Response.Redirect("Actividades.aspx");
+                }
+                
             }
         }
     }

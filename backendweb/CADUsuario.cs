@@ -42,7 +42,7 @@ namespace backEndWeb
             {
                 conec.Open();
                 SqlCommand consulta = new SqlCommand("Insert INTO [dbo].[Usuario] " +
-                    "(Correo_electronico,Apellidos,DNI,Es_admin,Contrasena,nombre)" +
+                    "(Correo_electronico,Apellidos,DNI,Es_admin,Contrasena,Nombre)" +
                     "values (@correo,@apellidos,@dni,@esAdmin,@contrasena,@nombre)", conec);
 
                 //consulta.Parameters.Add("@id", SqlDbType.Int).Value = user.idUser;
@@ -51,6 +51,8 @@ namespace backEndWeb
                 consulta.Parameters.Add("@esAdmin", SqlDbType.Bit).Value = user.esAdminUser;
                 consulta.Parameters.Add("@correo", SqlDbType.VarChar).Value = user.correoUser;
                 consulta.Parameters.Add("@contrasena", SqlDbType.VarChar).Value = user.contrasenaUser;
+                consulta.Parameters.Add("@nombre", SqlDbType.VarChar).Value = user.nombreUser;
+
 
                 consulta.ExecuteNonQuery();
 

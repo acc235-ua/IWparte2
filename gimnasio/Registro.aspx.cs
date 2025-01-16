@@ -116,7 +116,7 @@ namespace gimnasio
             
             if(usuario.readUsuario() == false)
             {
-                if(usuario.createUsuario() == false || socio.createSocio() == false)
+                if(usuario.createUsuario() == false)
                 {
                     errorContrasena.Text = "No se ha podido crear el usuario";
                 }

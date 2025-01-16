@@ -114,8 +114,8 @@ namespace backEndWeb
         public bool createUsuario()
         {
             CADUsuario aux = new CADUsuario();
-            ENUsuario usu = new ENUsuario(this);
-            if (usu.readUsuario())
+    
+            if (this.readUsuario())
             {
                 //ya esxiste
                 return false;

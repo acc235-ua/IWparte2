@@ -164,24 +164,28 @@ namespace backendweb.CAD
         }
 
 
-        public bool listarActividadesImpartidas(ref (int, string, DateTime)[] usuarios)
+        public bool listarActividadesImpartidas(ref (int, string,string, DateTime)[] usuarios)
         {
             SqlConnection conec = new SqlConnection(constring);
             bool respuesta = false;
             try
             {
                 conec.Open();
-                SqlCommand consulta = new SqlCommand("SELECT Id_Actividad, Correo_Monitor , Fecha FROM [dbo].[Actividad_impartida]", conec);
+                SqlCommand consulta = new SqlCommand(@"
+                SELECT AI.Id_Actividad, A.Nombre, AI.Correo_Monitor, AI.Fecha
+                FROM [dbo].[Actividad_impartida] AI, [dbo].[Actividad] A
+                WHERE AI.Id_Actividad = A.Id_Actividad", conec);
 
                 SqlDataReader leerDatos = consulta.ExecuteReader();
-                List<(int, string, DateTime)> listaTemporal = new List<(int, string, DateTime)>();
+                List<(int, string,string, DateTime)> listaTemporal = new List<(int, string,string, DateTime)>();
 
                 while (leerDatos.Read())
                 {
                     int id_actividad = int.Parse(leerDatos["Id_Actividad"].ToString());
                      string correo_monitor = leerDatos["Correo_Monitor"].ToString();
+                    string nombre_actividad = leerDatos["Nombre"].ToString();
                     DateTime fecha = DateTime.Parse(leerDatos["Fecha"].ToString());
-                    listaTemporal.Add((id_actividad, correo_monitor, fecha));
+                    listaTemporal.Add((id_actividad, correo_monitor,nombre_actividad ,fecha));
 
                 }
 

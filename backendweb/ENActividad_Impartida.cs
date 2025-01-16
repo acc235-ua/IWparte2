@@ -10,7 +10,7 @@ namespace backendweb.EN
     public class ENActividad_Impartida
     {
         private int id_actividad;
-        private int correo_monitor;
+        private string correo_monitor;
         private DateTime fecha;
         private int huecos;
         private float precio;
@@ -22,7 +22,7 @@ namespace backendweb.EN
             get { return id_actividad; }
             set { id_actividad = value; }
         }
-        public int correo_monitorActividad
+        public string correo_monitorActividad
         {
             get { return correo_monitor; }
             set { correo_monitor = value; }
@@ -59,7 +59,7 @@ namespace backendweb.EN
         public ENActividad_Impartida()
         {
             id_actividad = 0;
-            correo_monitor = 0;
+            correo_monitor = "";
             fecha = new DateTime();
             huecos = 0;
             hora_inicio = new TimeSpan();
@@ -67,7 +67,7 @@ namespace backendweb.EN
             this.precio = 0;
         }
 
-        public ENActividad_Impartida(int id_actividad, int correo, DateTime fecha, int huecos, int precio,TimeSpan hora_inicio, TimeSpan hora_fin)
+        public ENActividad_Impartida(int id_actividad, string correo, DateTime fecha, int huecos, int precio,TimeSpan hora_inicio, TimeSpan hora_fin)
         {
             this.id_actividad = id_actividad;
             this.correo_monitor = correo;

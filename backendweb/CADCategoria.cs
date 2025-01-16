@@ -112,6 +112,7 @@ namespace backEndWeb
             catch (SqlException ex)
             {
                 respuesta = false;
+                Console.WriteLine("Operación leer falla en CADCategoria {0}", ex.Message);
             }
             finally
             {

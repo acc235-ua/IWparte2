@@ -173,6 +173,7 @@ namespace backEndWeb
             catch (SqlException ex)
             {
                 respuesta = false;
+                Console.WriteLine("Error", ex.Message);
             }
             finally
             {

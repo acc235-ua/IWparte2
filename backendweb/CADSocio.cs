@@ -284,17 +284,20 @@ namespace backEndWeb
                 SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Socio] WHERE Correo_electronico = @Correo_electronico", conec);
                 consulta.Parameters.AddWithValue("@Correo_electronico", socio.correoSocio);
                 SqlDataReader dr = consulta.ExecuteReader();
-                dr.Read();
-                socio.correoSocio =dr["Correo_electronico"].ToString();
-                socio.Saldo = int.Parse(dr["Saldo"].ToString());
-                socio.Estado = dr["Estado"].ToString();
-                socio.MembresiaId = int.Parse(dr["MembresiaId"].ToString());
-                encontrado = true;
-                dr.Close();
+                if(dr.Read())
+                {
+                    socio.correoSocio = dr["Correo_electronico"].ToString();
+                    socio.Saldo = int.Parse(dr["Saldo"].ToString());
+                    socio.Estado = dr["Estado"].ToString();
+                    socio.MembresiaId = int.Parse(dr["MembresiaId"].ToString());
+                    encontrado = true;
+                    dr.Close();
+                }
             }
             catch (SqlException ex)
             {
                 encontrado = false;
+                Console.WriteLine("Operación leer falla en CADSocio {0}", ex.Message);
             }
             finally
             {

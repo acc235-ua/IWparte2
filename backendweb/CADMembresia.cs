@@ -137,12 +137,14 @@ namespace backEndWeb
                 SqlCommand consulta = new SqlCommand("SELECT * FROM [dbo].[Membresia] WHERE Id = @id", conec);
                 consulta.Parameters.AddWithValue("@id", membresia.id);
                 SqlDataReader reader = consulta.ExecuteReader();
-                reader.Read();
-                membresia.id = int.Parse(reader["Id"].ToString());
-                membresia.Descripcion = reader["Descripcion"].ToString();
-                membresia.Tipo = reader["Tipo"].ToString();
-                membresia.Precio = float.Parse(reader["Precio"].ToString());
-                respuesta = true;
+                if (reader.Read())
+                {
+                    membresia.id = int.Parse(reader["Id"].ToString());
+                    membresia.Descripcion = reader["Descripcion"].ToString();
+                    membresia.Tipo = reader["Tipo"].ToString();
+                    membresia.Precio = float.Parse(reader["Precio"].ToString());
+                    respuesta = true;
+                }
             }
             catch (SqlException ex)
             {

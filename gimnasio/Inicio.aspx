@@ -18,12 +18,12 @@
             <button class="carousel-btn absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" onclick="changeSlide(1)">&#10095;</button>
 
             <div class="carousel-slide w-full">
-                <img src="https://via.placeholder.com/700x400?text=Oferta+Estudiantes" alt="Oferta Estudiantes" class="w-full rounded-lg">
+                <img src="jovenes.jpg" alt="Oferta Estudiantes" class="w-full rounded-lg">
               
                     <p class="mt-2 text-base md:text-lg font-medium">Descuento especial para estudiantes. ¡Inscríbete ya!</p>
             </div>
             <div class="carousel-slide w-full">
-                <img src="https://via.placeholder.com/700x400?text=Oferta+Jubilados" alt="Oferta Jubilados" class="w-full rounded-lg">
+                <img src="viejo.jpg" alt="Oferta Jubilados" class="w-full rounded-lg">
                 <p class="mt-2 text-base md:text-lg font-medium">Oferta especial para jubilados. ¡No te lo pierdas!</p>
             </div>
         </div>

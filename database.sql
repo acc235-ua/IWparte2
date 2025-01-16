@@ -8,16 +8,6 @@ CREATE TABLE [dbo].[Usuario] (
     [nombre]             NVARCHAR (100) NOT NULL
 );
 
--- Crear la tabla Socio
-CREATE TABLE [dbo].[Socio] (
-    [Correo_electronico] VARCHAR (255) NOT NULL,             -- Referencia a Usuario
-    [Saldo]              INT           DEFAULT ((0)) NULL,
-    [Estado]             VARCHAR (50)  NOT NULL,
-    PRIMARY KEY CLUSTERED ([Correo_electronico] ASC),
-    FOREIGN KEY ([Correo_electronico]) REFERENCES [dbo].[Usuario] ([Correo_electronico]) ON DELETE CASCADE,
-    CHECK ([Saldo] >= (0))
-);
-
 -- Crear la tabla Monitor
 CREATE TABLE [dbo].[Monitor] (
     [Correo_electronico] VARCHAR (255) NOT NULL,             -- Referencia a Usuario
@@ -29,30 +19,12 @@ CREATE TABLE [dbo].[Monitor] (
     CHECK ([salario] >= (0))
 );
 
--- Crear la tabla Admin
-CREATE TABLE [dbo].[Admin] (
-    [Correo_electronico] VARCHAR (255) NOT NULL,             -- Referencia a Usuario
-    PRIMARY KEY CLUSTERED ([Correo_electronico] ASC),
-    FOREIGN KEY ([Correo_electronico]) REFERENCES [dbo].[Usuario] ([Correo_electronico]) ON DELETE CASCADE
-);
-
-
 -- Crear la tabla Membresia primero ya que Socio depende de ella
 CREATE TABLE [dbo].[Membresia] (
     Id           INT PRIMARY KEY,
     Descripcion  VARCHAR(255) NOT NULL,
     Tipo         VARCHAR(50) NOT NULL,
     Precio       FLOAT CHECK (Precio >= 0) NOT NULL
-);
-
--- Crear la tabla Usuario
-CREATE TABLE [dbo].[Usuario] (
-    Correo_electronico VARCHAR(255) NOT NULL PRIMARY KEY,
-    Apellidos          VARCHAR(255) NOT NULL,
-    DNI                VARCHAR(20)  NOT NULL UNIQUE,
-    Es_admin           BIT          DEFAULT ((0)) NOT NULL,
-    Contrasena         VARCHAR(255) NOT NULL,
-    Nombre             NVARCHAR(100) NOT NULL
 );
 
 -- Crear la tabla Socio
@@ -63,21 +35,6 @@ CREATE TABLE [dbo].[Socio] (
     MembresiaId        INT          NULL,
     FOREIGN KEY (Correo_electronico) REFERENCES [dbo].[Usuario] (Correo_electronico) ON DELETE CASCADE,
     FOREIGN KEY (MembresiaId) REFERENCES [dbo].[Membresia] (Id) ON DELETE SET NULL
-);
-
--- Crear la tabla Monitor
-CREATE TABLE [dbo].[Monitor] (
-    Correo_electronico VARCHAR(255) NOT NULL PRIMARY KEY,
-    Especialidad       VARCHAR(255) NOT NULL,
-    Salario            FLOAT CHECK (Salario >= 0) NOT NULL,
-    Telefono           VARCHAR(20) NOT NULL,
-    FOREIGN KEY (Correo_electronico) REFERENCES [dbo].[Usuario] (Correo_electronico) ON DELETE CASCADE
-);
-
--- Crear la tabla Admin
-CREATE TABLE [dbo].[Admin] (
-    Correo_electronico VARCHAR(255) NOT NULL PRIMARY KEY,
-    FOREIGN KEY (Correo_electronico) REFERENCES [dbo].[Usuario] (Correo_electronico) ON DELETE CASCADE
 );
 
 -- Crear la tabla Categoria

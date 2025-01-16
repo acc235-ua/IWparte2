@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using backEndWeb;
 
 namespace gimnasio
 {
@@ -22,6 +24,7 @@ namespace gimnasio
             errorContrasena.Text = "";
             errorDni.Text = "";
             errorTarifa.Text = "";
+            bool ok = false;
 
             // Validar el correo electrónico
             if (!email.Text.Contains("@"))
@@ -107,7 +110,7 @@ namespace gimnasio
             }
 
             // Conexión a la base de datos
-            string connectionString = "Data Source=TU_SERVIDOR;Initial Catalog=TU_BD;Integrated Security=True";
+            string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ToString();
 
             try
             {
@@ -153,6 +156,7 @@ namespace gimnasio
                             // Confirmar la transacción
                             transaction.Commit();
                             Response.Write("<script>alert('Registro completado con éxito');</script>");
+                            ok = true;
                         }
                         catch (Exception ex)
                         {
@@ -166,6 +170,11 @@ namespace gimnasio
             catch (Exception ex)
             {
                 errorCorreo.Text = $"Error de conexión a la base de datos: {ex.Message}";
+            }
+
+            if (ok)
+            {
+                Response.Redirect("Inicio.aspx");
             }
         }
     }

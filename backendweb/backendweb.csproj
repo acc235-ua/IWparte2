@@ -42,23 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CAD\CADActividad.cs" />
-    <Compile Include="CAD\CADActividad_Impartida.cs" />
-    <Compile Include="CAD\CADCategoria.cs" />
-    <Compile Include="CAD\CADMembresia.cs" />
-    <Compile Include="CAD\CADMonitor.cs" />
-    <Compile Include="CAD\CADReserva.cs" />
-    <Compile Include="CAD\CADSocio.cs" />
-    <Compile Include="CAD\CADUsuario.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="EN\ENActividad.cs" />
-    <Compile Include="EN\ENActividad_Impartida.cs" />
-    <Compile Include="EN\ENCategoria.cs" />
-    <Compile Include="EN\ENMembresia.cs" />
-    <Compile Include="EN\ENMonitor.cs" />
-    <Compile Include="EN\ENReserva.cs" />
-    <Compile Include="EN\ENSocio.cs" />
-    <Compile Include="EN\ENUsuario.cs" />
+    <Compile Include="CADActividad.cs" />
+    <Compile Include="CADActividad_Impartida.cs" />
+    <Compile Include="CADCategoria.cs" />
+    <Compile Include="CADMembresia.cs" />
+    <Compile Include="CADMonitor.cs" />
+    <Compile Include="CADReserva.cs" />
+    <Compile Include="CADSocio.cs" />
+    <Compile Include="CADUsuario.cs" />
+    <Compile Include="ENActividad.cs" />
+    <Compile Include="ENActividad_Impartida.cs" />
+    <Compile Include="ENCategoria.cs" />
+    <Compile Include="ENMembresia.cs" />
+    <Compile Include="ENMonitor.cs" />
+    <Compile Include="ENReserva.cs" />
+    <Compile Include="ENSocio.cs" />
+    <Compile Include="ENUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

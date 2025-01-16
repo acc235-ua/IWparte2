@@ -13,5 +13,10 @@ namespace gimnasio
         {
 
         }
+
+        protected void btnCobrar(object sender, EventArgs e)
+        {
+
+        }
     }
 }

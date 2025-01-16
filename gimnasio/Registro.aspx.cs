@@ -24,7 +24,6 @@ namespace gimnasio
             errorContrasena.Text = "";
             errorDni.Text = "";
             errorTarifa.Text = "";
-            bool ok = false;
 
             // Validar el correo electrónico
             if (!email.Text.Contains("@"))
@@ -109,72 +108,33 @@ namespace gimnasio
                 return;
             }
 
-            // Conexión a la base de datos
-            string connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ToString();
+            ENUsuario usuario;
+            ENSocio socio;
 
-            try
+            usuario = new ENUsuario(nombreUsuario, apellidosUsuario, dni, false, correo, contrasena.Text);
+            socio = new ENSocio(correo, 0, "pendiente");
+            
+            if(usuario.readUsuario() == false)
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                if(usuario.createUsuario() == false || socio.createSocio() == false)
                 {
-                    connection.Open();
-
-                    // Iniciar una transacción
-                    using (SqlTransaction transaction = connection.BeginTransaction())
+                    errorContrasena.Text = "No se ha podido crear el usuario";
+                }
+                else
+                {
+                    if(Request.QueryString["desde"] == "admin")
                     {
-                        try
-                        {
-                            // Insertar en la tabla Usuario
-                            string insertUsuarioQuery = @"
-                                INSERT INTO Usuario (Correo_electronico, Nombre, Apellidos, DNI, Contrasena, Es_admin)
-                                VALUES (@Correo, @Nombre, @Apellidos, @DNI, @Contrasena, @EsAdmin)";
-
-                            using (SqlCommand cmd = new SqlCommand(insertUsuarioQuery, connection, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@Correo", correo);
-                                cmd.Parameters.AddWithValue("@Nombre", nombreUsuario);
-                                cmd.Parameters.AddWithValue("@Apellidos", apellidosUsuario);
-                                cmd.Parameters.AddWithValue("@DNI", dni);
-                                cmd.Parameters.AddWithValue("@Contrasena", contrasena.Text.Trim()); // Usar la contraseña ingresada
-                                cmd.Parameters.AddWithValue("@EsAdmin", 0); // No es administrador
-                                cmd.ExecuteNonQuery();
-                            }
-
-                            // Insertar en la tabla Socio
-                            string insertSocioQuery = @"
-                                INSERT INTO Socio (Correo_electronico, Saldo, Estado, MembresiaId)
-                                VALUES (@Correo, @Saldo, @Estado, @MembresiaId)";
-
-                            using (SqlCommand cmd = new SqlCommand(insertSocioQuery, connection, transaction))
-                            {
-                                cmd.Parameters.AddWithValue("@Correo", correo);
-                                cmd.Parameters.AddWithValue("@Saldo", 0); // Saldo inicial
-                                cmd.Parameters.AddWithValue("@Estado", "pendiente"); // Estado inicial
-                                cmd.Parameters.AddWithValue("@MembresiaId", membresiaId);
-                                cmd.ExecuteNonQuery();
-                            }
-
-                            // Confirmar la transacción
-                            transaction.Commit();
-                            Response.Write("<script>alert('Registro completado con éxito');</script>");
-                            ok = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            // Revertir transacción en caso de error
-                            transaction.Rollback();
-                            errorCorreo.Text = $"Error al registrar el usuario: {ex.Message}";
-                        }
+                        Response.Redirect("VerActividades.aspx");
+                    }
+                    else
+                    {
+                        Response.Redirect("Actividades.aspx");
                     }
                 }
             }
-            catch (Exception ex)
+            else
             {
-                errorCorreo.Text = $"Error de conexión a la base de datos: {ex.Message}";
-            }
-
-            if (ok)
-            {
-                Response.Redirect("Inicio.aspx");
+                errorContrasena.Text = "Ese correo ya está en uso";
             }
         }
     }

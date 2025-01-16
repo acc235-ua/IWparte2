@@ -12,7 +12,7 @@ namespace backEndWeb
     public class ENSocio
     {
         public string correo;
-        public int Saldo;
+        public float Saldo;
         public string Estado;
         public int MembresiaId;
 
@@ -27,7 +27,7 @@ namespace backEndWeb
             set { correo = value; }
         }
 
-        public int SaldoSocio
+        public float SaldoSocio
         {
             get { return Saldo; }
             set { Saldo = value; }
@@ -53,7 +53,7 @@ namespace backEndWeb
             Estado = "";
         }
 
-        public ENSocio(string co, int Saldo, string Estado)
+        public ENSocio(string co, float Saldo, string Estado)
         {
             this.correoSocio = co;
             this.Saldo = Saldo;

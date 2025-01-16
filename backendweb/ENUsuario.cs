@@ -20,7 +20,7 @@ namespace backEndWeb
         private string correo;
         private string contrasena;
 
-    
+
         public string nombreUser
         {
             get { return nombre; }
@@ -59,7 +59,7 @@ namespace backEndWeb
         public ENUsuario()
         {
             CADUsuario aux = new CADUsuario();
-           
+
             this.dni = "";
             this.nombre = "";
             this.apellidos = "";
@@ -164,7 +164,7 @@ namespace backEndWeb
 
 
         public bool listarUsuarios(ref (string, string)[] usuarios) // ESPERAMOS UN ARRAY VACÍO PARA LLENAR CON TUPLAS 
-                                                                 //EN EL CAD SE BORRA CONTENIDO ACTUAL ARRAY
+                                                                    //EN EL CAD SE BORRA CONTENIDO ACTUAL ARRAY
         {
             CADUsuario aux = new CADUsuario();
             if (aux.listarUsuarios(ref usuarios))
@@ -184,7 +184,8 @@ namespace backEndWeb
         {
             CADUsuario aux = new CADUsuario();
             return aux.CompruebaAdmin(this);
-            
- 
+
+
         }
+    }
 }

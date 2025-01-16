@@ -286,7 +286,7 @@ namespace backEndWeb
                 SqlDataReader dr = consulta.ExecuteReader();
                 dr.Read();
                 socio.correoSocio =dr["Correo_electronico"].ToString();
-                socio.Saldo = int.Parse(dr["Saldo"].ToString());
+                socio.Saldo = float.Parse(dr["Saldo"].ToString());
                 socio.Estado = dr["Estado"].ToString();
                 socio.MembresiaId = int.Parse(dr["MembresiaId"].ToString());
                 encontrado = true;

@@ -139,7 +139,7 @@ namespace backendweb.EN
         }
 
         //recibe un array de tuplas para llenarlo, declararlo vacío ya que su contenido previo se pierde para llenarlo
-        public bool listarActividadesImpartidas(ref (int, int, DateTime)[] actividades_Impartidas) {
+        public bool listarActividadesImpartidas(ref (int, string, DateTime)[] actividades_Impartidas) {
 
             CADActividad_Impartida aux = new CADActividad_Impartida();
             return aux.listarActividadesImpartidas(ref actividades_Impartidas);

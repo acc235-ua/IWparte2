@@ -32,7 +32,7 @@
 </header>
     <div class="container mx-auto py-8">
         <h2 class="text-3xl font-bold text-center mb-6">Registrar Actividad Impartida</h2>
-        <form id="formRegistro" runat="server" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+                <form id="formRegistro" runat="server" class="bg-white p-6 rounded-lg shadow-md w-full">
             <!-- Campo Id_Actividad -->
             <div class="mb-4">
                 <label for="Id_Actividad" class="block text-gray-700 font-semibold mb-2">Actividad</label>
@@ -88,7 +88,10 @@
             <h3 class="text-2xl font-bold mb-4">Actividades Impartidas</h3>
             <asp:Label ID="lblMensaje" runat="server" CssClass="text-red-500"></asp:Label>
 
-           <asp:GridView ID="gvActividadesImpartidas" runat="server" CssClass="table-auto w-full border-collapse border border-gray-300 mt-4" AutoGenerateColumns="False" OnRowCommand="gvActividadesImpartidas_RowCommand">
+           <asp:GridView ID="gvActividadesImpartidas" runat="server"  CssClass="w-full border border-gray-300 mt-4 text-left text-sm"
+                HeaderStyle-CssClass="bg-blue-500 text-white text-left font-bold"
+                RowStyle-CssClass="border-t border-gray-300"
+                AlternatingRowStyle-CssClass="bg-gray-100" AutoGenerateColumns="False" OnRowCommand="gvActividadesImpartidas_RowCommand">
     <Columns>
         <asp:BoundField DataField="IdActividad" HeaderText="ID Actividad" />
         <asp:BoundField DataField="CorreoMonitor" HeaderText="Correo Monitor" />

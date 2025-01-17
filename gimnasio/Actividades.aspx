@@ -25,28 +25,44 @@
             </nav>
         </div>
     </header>
-            <form id="formRegistro" runat="server" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-     <h3 class="text-2xl font-bold mb-4">Actividades Impartidas</h3>
+
+    <!-- Contenedor principal -->
+    <div class="container mx-auto mt-8 px-4">
+        <form id="formRegistro" runat="server" class="bg-white p-6 rounded-lg shadow-md w-full">
+            <h3 class="text-2xl font-bold mb-4">Actividades Impartidas</h3>
             <asp:Label ID="lblMensaje" runat="server" CssClass="text-red-500"></asp:Label>
 
-           <asp:GridView ID="gvActividadesImpartidas" runat="server" CssClass="table-auto w-full border-collapse border border-gray-300 mt-4" AutoGenerateColumns="False" OnRowCommand="gvActividadesImpartidas_RowCommand">
-    <Columns>
-        <asp:BoundField DataField="IdActividad" HeaderText="ID Actividad" />
-        <asp:BoundField DataField="CorreoMonitor" HeaderText="Correo Monitor" />
-        <asp:BoundField DataField="NombreActividad" HeaderText="Nombre Actividad" />
-        <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:yyyy-MM-dd}" />
-        <asp:TemplateField HeaderText="Acciones">
-            <ItemTemplate>
-                <asp:Button ID="btnInscribir" runat="server" CommandName="Inscribir" 
-                    CommandArgument='<%# Eval("IdActividad") + "|" + Eval("CorreoMonitor") + "|" + Eval("Fecha", "{0:yyyy-MM-dd}") %>' 
-                    Text="Inscribirse" CssClass="btn btn-danger" OnClientClick="return confirm('¿Estás seguro de que deseas inscribirte a esta actividad?');" />
-            </ItemTemplate>
-        </asp:TemplateField>
-    </Columns>
-</asp:GridView>
-
-
+            <asp:GridView 
+                ID="gvActividadesImpartidas" 
+                runat="server" 
+                CssClass="w-full border border-gray-300 mt-4 text-left text-sm"
+                HeaderStyle-CssClass="bg-blue-500 text-white text-left font-bold"
+                RowStyle-CssClass="border-t border-gray-300"
+                AlternatingRowStyle-CssClass="bg-gray-100"
+                AutoGenerateColumns="False" 
+                OnRowCommand="gvActividadesImpartidas_RowCommand">
+                <Columns>
+                    <asp:BoundField DataField="IdActividad" HeaderText="ID Actividad" />
+                    <asp:BoundField DataField="CorreoMonitor" HeaderText="Correo Monitor" />
+                    <asp:BoundField DataField="NombreActividad" HeaderText="Nombre Actividad" />
+                    <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:yyyy-MM-dd}" />
+                    <asp:TemplateField HeaderText="Acciones">
+                        <ItemTemplate>
+                            <asp:Button 
+                                ID="btnInscribir" 
+                                runat="server" 
+                                CommandName="Inscribir" 
+                                CommandArgument='<%# Eval("IdActividad") + "|" + Eval("CorreoMonitor") + "|" + Eval("Fecha", "{0:yyyy-MM-dd}") %>' 
+                                Text="Inscribirse" 
+                                CssClass="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
+                                OnClientClick="return confirm('¿Estás seguro de que deseas inscribirte a esta actividad?');" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
         </form>
+    </div>
 
 </body>
+
 </html>

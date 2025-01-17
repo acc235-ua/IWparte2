@@ -54,7 +54,7 @@ namespace gimnasio
                                 string contrasenaEnDb = reader["Contrasena"].ToString();
                                 bool esAdmin = Convert.ToBoolean(reader["Es_admin"]);
 
-                                // Comprobar si la contraseña coincide
+                                
                                 if (contrasenaUsuario == contrasenaEnDb)
                                 {
                                     // Redirigir según el rol

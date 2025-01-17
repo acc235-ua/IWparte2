@@ -52,10 +52,10 @@ namespace gimnasio
         {
             if (e.CommandArgument != null)
             {
-                // Dividir el argumento para obtener los valores de la clave primaria
+                
                 string[] argumentos = e.CommandArgument.ToString().Split('|');
                 int idActividad = int.Parse(argumentos[0]);
-                string correoMonitor = argumentos[1];  // Ahora obtenemos el correo del monitor
+                string correoMonitor = argumentos[1]; 
                 DateTime fecha = DateTime.Parse(argumentos[2]);
                 string correoUsuario = Session["CorreoUsuario"] as string;
                 if (e.CommandName == "Inscribir")

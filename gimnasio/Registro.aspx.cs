@@ -77,28 +77,28 @@ namespace gimnasio
                 return;
             }
 
-            // Obtener datos del formulario
+            
             string correo = email.Text.Trim();
             string nombreUsuario = nombre.Text.Trim();
             string apellidosUsuario = apellidos.Text.Trim();
             string tarifaSeleccionada = tarifa.SelectedValue;
 
-            // Asignar Membresía según tarifa
+            
             int membresiaId;
 
             switch (tarifaSeleccionada)
             {
                 case "Estudiante":
-                    membresiaId = 1; // Id de la membresía "Estudiante"
+                    membresiaId = 1;
                     break;
                 case "Jubilado":
-                    membresiaId = 2; // Id de la membresía "Jubilado"
+                    membresiaId = 2;
                     break;
                 case "Standard":
-                    membresiaId = 3; // Id de la membresía "Standard"
+                    membresiaId = 3;
                     break;
                 default:
-                    membresiaId = 0; // Por defecto, no asignar
+                    membresiaId = 0;
                     break;
             }
 

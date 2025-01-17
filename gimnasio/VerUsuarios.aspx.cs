@@ -28,14 +28,14 @@ namespace gimnasio
 
             if (exito && usuarios.Length > 0)
             {
-                // Rellena el GridView con los datos obtenidos
+                
                 gvUsuarios.DataSource = usuarios.Select(ai => new
                 {
                     Correo_electronico = ai.Item1,
                     Nombre = ai.Item2,
                 }).ToList();
              
-                gvUsuarios.DataBind();  // Esto asegura que se actualice el DataSource
+                gvUsuarios.DataBind(); 
             }
             else
             {
@@ -68,10 +68,10 @@ namespace gimnasio
 
         }
 
-        // Cargar detalles de usuario para editar
+        
         private void CargarDetallesUsuario(string correo)
         {
-            // Aquí puedes cargar los datos del usuario de la base de datos, como el nombre, apellidos, etc.
+            
             ENUsuario usuario = new ENUsuario();
             usuario.correoUser = correo;
 
@@ -103,16 +103,16 @@ namespace gimnasio
                 correoUser = correo
             };
 
-            if (usuario.deleteUsuario()) // Verifica si la eliminación fue exitosa
+            if (usuario.deleteUsuario())
             {
                 // Mensaje de éxito
                 Response.Write("<script>alert('Usuario eliminado con éxito.');</script>");
 
-                // Limpiar el DataSource y recargar el GridView
+                
                 gvUsuarios.DataSource = null;
-                gvUsuarios.DataBind(); // Esto asegura que el GridView se refresque
+                gvUsuarios.DataBind();
 
-                // Llamar a MostrarActividadesImpartidas para obtener los datos actualizados
+                
                 MostrarUsuarios();
             }
             else

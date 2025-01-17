@@ -40,7 +40,7 @@ namespace gimnasio
                     NombreActividad = ai.Item3,
                     Fecha = ai.Item4.ToString("yyyy-MM-dd")
                 }).ToList();
-                gvActividadesImpartidas.DataBind();  // Esto asegura que se actualice el DataSource
+                gvActividadesImpartidas.DataBind(); 
             }
             else
             {
@@ -96,7 +96,7 @@ namespace gimnasio
                     }
                     finally
                     {
-                        reader.Close(); // Cierra el DataReader después de usarlo
+                        reader.Close();
                     }
                 }
             }
@@ -144,20 +144,20 @@ namespace gimnasio
 {
     if (e.CommandArgument != null)
     {
-        // Dividir el argumento para obtener los valores de la clave primaria
+        
         string[] argumentos = e.CommandArgument.ToString().Split('|');
         int idActividad = int.Parse(argumentos[0]);
-        string correoMonitor = argumentos[1];  // Ahora obtenemos el correo del monitor
+        string correoMonitor = argumentos[1]; 
         DateTime fecha = DateTime.Parse(argumentos[2]);
 
         if (e.CommandName == "Editar")
         {
-            // Cargar datos en el formulario para edición
+            
             CargarDatosActividad(idActividad, correoMonitor, fecha);
         }
         else if (e.CommandName == "Borrar")
         {
-            // Eliminar actividad
+            
             BorrarActividad(idActividad, correoMonitor, fecha);
 
             // Refrescar listado

@@ -17,7 +17,7 @@
             <h1 class="text-2xl md:text-3xl font-bold mb-2 md:mb-0">Fit Gym</h1>
             <nav>
                 <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
-                    <li><a href="Inicio.aspx" class="hover:text-gray-300">Inicio</a></li>
+                    <li><a href="Default.aspx" class="hover:text-gray-300">Inicio</a></li>
                     <li><a href="Tarifas.aspx" class="hover:text-gray-300">Tarifas</a></li>
                     <li><a href="#" class="hover:text-gray-300">Instalaciones</a></li>
                     <li><a href="#" class="hover:text-gray-300">Contacto</a></li>

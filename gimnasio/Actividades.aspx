@@ -20,7 +20,7 @@
                 <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
                     <li><a href="Actividades.aspx" class="hover:text-gray-300">Actividades</a></li>
                     <li><a href="Saldo.aspx" class="hover:text-gray-300">Saldo</a></li>
-                    <li><a href="Inicio.aspx" class="hover:text-gray-300">Cerrar Sesión</a></li>
+                    <li><a href="Default.aspx" class="hover:text-gray-300">Cerrar Sesión</a></li>
                 </ul>
             </nav>
         </div>
